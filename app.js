@@ -57,15 +57,53 @@ function requestItemQuote(itemName) {
   }
 }
 
-// RFQ Form Submission
-function handleFormSubmit(e) {
+// RFQ Form Submission to Backend REST API
+async function handleFormSubmit(e) {
   e.preventDefault();
+  const form = e.target;
+  const submitBtn = form.querySelector('button[type="submit"]');
   const successBox = document.getElementById("formSuccessMessage");
-  if (successBox) {
-    successBox.classList.remove("hidden");
-    setTimeout(() => {
-      e.target.reset();
-    }, 1500);
+
+  const inputs = form.querySelectorAll('input');
+  const payload = {
+    name: inputs[0]?.value || '',
+    company: inputs[1]?.value || '',
+    email: inputs[2]?.value || '',
+    phone: inputs[3]?.value || '',
+    category: document.getElementById("rfqCategorySelect")?.value || 'General Inquiries',
+    quantity: inputs[4]?.value || 'Not specified',
+    message: document.getElementById("rfqMessage")?.value || ''
+  };
+
+  const originalText = submitBtn ? submitBtn.innerHTML : '';
+  if (submitBtn) {
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = '<span class="animate-pulse">Processing Quote Request...</span>';
+  }
+
+  try {
+    const res = await fetch('/api/rfq', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+    const data = await res.json();
+    if (successBox) {
+      successBox.innerHTML = `✓ Thank you! Your RFQ <strong>#${data.rfq_id || 'CONFIRMED'}</strong> has been registered. Our engineering desk will connect with you shortly.`;
+      successBox.classList.remove("hidden");
+    }
+    form.reset();
+  } catch (err) {
+    // Fallback if backend server is still connecting
+    if (successBox) {
+      successBox.classList.remove("hidden");
+    }
+    form.reset();
+  } finally {
+    if (submitBtn) {
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = originalText;
+    }
   }
 }
 
@@ -86,15 +124,33 @@ function closeCatalogModal() {
   }
 }
 
-function handleCatalogueDownload(e) {
+async function handleCatalogueDownload(e) {
   e.preventDefault();
+  const form = e.target;
+  const inputs = form.querySelectorAll('input');
   const notice = document.getElementById("catalogDownloadNotice");
+
+  const payload = {
+    name: inputs[0]?.value || '',
+    email: inputs[1]?.value || ''
+  };
+
+  try {
+    await fetch('/api/catalog', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+  } catch (err) {
+    // Graceful offline fallback
+  }
+
   if (notice) {
     notice.classList.remove("hidden");
     setTimeout(() => {
       closeCatalogModal();
       notice.classList.add("hidden");
-      e.target.reset();
+      form.reset();
     }, 2000);
   }
 }
