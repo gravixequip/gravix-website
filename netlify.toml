@@ -1,0 +1,14 @@
+[[redirects]]
+  from = "/api/rfq"
+  to = "/.netlify/functions/rfq"
+  status = 200
+
+[[redirects]]
+  from = "/api/catalog"
+  to = "/.netlify/functions/catalog"
+  status = 200
+
+[[redirects]]
+  from = "/admin"
+  to = "/admin.html"
+  status = 200
