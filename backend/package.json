@@ -1,0 +1,22 @@
+{
+  "name": "gravix-backend",
+  "version": "1.0.0",
+  "description": "Production REST API Backend & Admin Portal for Gravix Equipment Solutions LLP",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2",
+    "cors": "^2.8.5"
+  },
+  "keywords": [
+    "gravix",
+    "backend",
+    "api",
+    "rfq"
+  ],
+  "author": "Gravix Equipment Solutions LLP",
+  "license": "ISC"
+}
