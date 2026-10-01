@@ -17,6 +17,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // Product Filtering
 function filterProducts(category) {
+  const searchInput = document.getElementById("liveProductSearch");
+  if (searchInput) searchInput.value = "";
+
   const cards = document.querySelectorAll(".product-card");
   const buttons = document.querySelectorAll(".filter-btn");
 
@@ -25,21 +28,65 @@ function filterProducts(category) {
     btn.classList.remove("active");
   });
 
-  const activeBtn = event ? event.currentTarget : null;
-  if (activeBtn) {
-    activeBtn.classList.add("active");
+  if (window.event && window.event.currentTarget) {
+    window.event.currentTarget.classList.add("active");
   }
 
+  let visibleCount = 0;
   // Filter Cards
   cards.forEach((card) => {
     const cardCat = card.getAttribute("data-category");
     if (category === "all" || cardCat === category) {
       card.style.display = "flex";
-      card.classList.add("animate-fadeIn");
+      visibleCount++;
     } else {
       card.style.display = "none";
     }
   });
+
+  const notice = document.getElementById("noProductsFoundNotice");
+  if (notice) {
+    if (visibleCount === 0) {
+      notice.classList.remove("hidden");
+    } else {
+      notice.classList.add("hidden");
+    }
+  }
+}
+
+// Live Real-Time Product Search
+function liveSearchProducts() {
+  const query = (document.getElementById("liveProductSearch")?.value || "").toLowerCase().trim();
+  const cards = document.querySelectorAll(".product-card");
+  let visibleCount = 0;
+
+  // Clear active tab filter if typing a search
+  if (query) {
+    const buttons = document.querySelectorAll(".filter-btn");
+    buttons.forEach((btn) => btn.classList.remove("active"));
+  }
+
+  cards.forEach((card) => {
+    const searchData = (card.getAttribute("data-search") || "").toLowerCase();
+    const title = card.querySelector("h3")?.innerText.toLowerCase() || "";
+    const desc = card.querySelector("p")?.innerText.toLowerCase() || "";
+
+    if (!query || searchData.includes(query) || title.includes(query) || desc.includes(query)) {
+      card.style.display = "flex";
+      visibleCount++;
+    } else {
+      card.style.display = "none";
+    }
+  });
+
+  const notice = document.getElementById("noProductsFoundNotice");
+  if (notice) {
+    if (visibleCount === 0) {
+      notice.classList.remove("hidden");
+    } else {
+      notice.classList.add("hidden");
+    }
+  }
 }
 
 // Quick Inquire from Product card -> scroll & pre-fill RFQ
