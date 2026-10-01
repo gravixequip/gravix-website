@@ -140,112 +140,78 @@
     let allRfqs = [];
 
     async function fetchData() {
+      let serverRfqs = [];
       try {
-        const statsRes = await fetch('/api/stats');
-        const stats = await statsRes.json();
-        document.getElementById('statTotal').innerText = stats.total_rfqs || 0;
-        document.getElementById('statNew').innerText = stats.new_inquiries || 0;
-        document.getElementById('statQuoted').innerText = stats.quoted_orders || 0;
-        document.getElementById('statClosed').innerText = stats.closed_deals || 0;
-
         const rfqsRes = await fetch('/api/rfq');
-        const data = await rfqsRes.json();
-        allRfqs = data.rfqs || [];
-        renderTable(allRfqs);
+        if (rfqsRes.ok) {
+          const data = await rfqsRes.json();
+          serverRfqs = data.rfqs || [];
+        }
       } catch (err) {
-        console.error('Failed to fetch data:', err);
+        console.warn('Serverless API fetch fallback:', err);
       }
-    }
 
-    function renderTable(list) {
-      const tbody = document.getElementById('rfqTableBody');
-      const emptyNotice = document.getElementById('emptyNotice');
-      tbody.innerHTML = '';
+      // Read local storage RFQs
+      let localRfqs = [];
+      try {
+        localRfqs = JSON.parse(localStorage.getItem('gravix_rfqs') || '[]');
+      } catch (e) {}
 
-      if (list.length === 0) {
-        emptyNotice.classList.remove('hidden');
-        return;
-      }
-      emptyNotice.classList.add('hidden');
-
-      list.forEach(rfq => {
-        const tr = document.createElement('tr');
-        tr.className = 'hover:bg-slate-800/50 transition';
-
-        const statusBadges = {
-          'NEW': '<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-amber-500/20 text-amber-400 border border-amber-500/40">NEW</span>',
-          'QUOTED': '<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-purple-500/20 text-purple-400 border border-purple-500/40">QUOTED</span>',
-          'CLOSED': '<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-500/20 text-emerald-400 border border-emerald-500/40">CLOSED</span>'
-        };
-
-        const cleanPhone = rfq.phone.replace(/[^0-9]/g, '');
-        const whatsappMsg = encodeURIComponent(`Hello ${rfq.name}, thank you for contacting Gravix Equipment Solutions regarding your inquiry for ${rfq.category}. We are happy to provide the best quote.`);
-        const waLink = `https://wa.me/${cleanPhone}?text=${whatsappMsg}`;
-
-        tr.innerHTML = `
-          <td class="py-3 px-4 font-mono font-bold text-amber-400">${rfq.id}</td>
-          <td class="py-3 px-4">
-            <div class="font-bold text-white">${escapeHtml(rfq.name)}</div>
-            <div class="text-[11px] text-slate-400">${escapeHtml(rfq.company)}</div>
-          </td>
-          <td class="py-3 px-4 font-mono">
-            <a href="tel:${cleanPhone}" class="text-slate-200 hover:text-amber-400">${escapeHtml(rfq.phone)}</a>
-            <div class="text-[11px] text-slate-400">${escapeHtml(rfq.email || '-')}</div>
-          </td>
-          <td class="py-3 px-4">
-            <div class="font-medium text-white">${escapeHtml(rfq.category)}</div>
-            <div class="text-[11px] text-amber-400 font-mono">Qty: ${escapeHtml(rfq.quantity)}</div>
-          </td>
-          <td class="py-3 px-4 max-w-xs truncate text-[11px] text-slate-300" title="${escapeHtml(rfq.message)}">
-            ${escapeHtml(rfq.message || 'Standard quote request')}
-          </td>
-          <td class="py-3 px-4 text-[11px] text-slate-400">
-            ${new Date(rfq.createdAt).toLocaleDateString()}
-          </td>
-          <td class="py-3 px-4">
-            ${statusBadges[rfq.status] || rfq.status}
-          </td>
-          <td class="py-3 px-4 text-right space-x-1.5 whitespace-nowrap">
-            <a href="${waLink}" target="_blank" class="inline-flex p-1.5 rounded-lg bg-emerald-600/20 hover:bg-emerald-600/30 text-emerald-400 border border-emerald-500/30" title="WhatsApp Client">
-              <i data-lucide="message-circle" class="w-3.5 h-3.5"></i>
-            </a>
-            <select onchange="updateStatus('${rfq.id}', this.value)" class="bg-slate-950 border border-slate-700 text-[10px] text-slate-300 rounded px-1.5 py-1">
-              <option value="NEW" ${rfq.status === 'NEW' ? 'selected' : ''}>New</option>
-              <option value="QUOTED" ${rfq.status === 'QUOTED' ? 'selected' : ''}>Quoted</option>
-              <option value="CLOSED" ${rfq.status === 'CLOSED' ? 'selected' : ''}>Closed</option>
-            </select>
-            <button onclick="deleteRfq('${rfq.id}')" class="inline-flex p-1.5 rounded-lg bg-red-600/20 hover:bg-red-600/30 text-red-400 border border-red-500/30" title="Delete">
-              <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
-            </button>
-          </td>
-        `;
-        tbody.appendChild(tr);
+      // Merge and deduplicate by id
+      const map = new Map();
+      [...localRfqs, ...serverRfqs].forEach(item => {
+        if (item && item.id && !map.has(item.id)) {
+          map.set(item.id, item);
+        }
       });
+      allRfqs = Array.from(map.values());
 
-      if (window.lucide) window.lucide.createIcons();
+      // Update counters directly
+      const total = allRfqs.length;
+      const newCount = allRfqs.filter(r => r.status === 'NEW').length;
+      const quotedCount = allRfqs.filter(r => r.status === 'QUOTED').length;
+      const closedCount = allRfqs.filter(r => r.status === 'CLOSED').length;
+
+      document.getElementById('statTotal').innerText = total;
+      document.getElementById('statNew').innerText = newCount;
+      document.getElementById('statQuoted').innerText = quotedCount;
+      document.getElementById('statClosed').innerText = closedCount;
+
+      renderTable(allRfqs);
     }
 
     async function updateStatus(id, newStatus) {
+      const target = allRfqs.find(r => r.id === id);
+      if (target) {
+        target.status = newStatus;
+      }
+      try {
+        localStorage.setItem('gravix_rfqs', JSON.stringify(allRfqs));
+      } catch (e) {}
+
       try {
         await fetch(`/api/rfq/${id}`, {
           method: 'PATCH',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ status: newStatus })
         });
-        fetchData();
-      } catch (err) {
-        alert('Failed to update status');
-      }
+      } catch (err) {}
+
+      fetchData();
     }
 
     async function deleteRfq(id) {
       if (!confirm('Are you sure you want to remove this lead?')) return;
+      allRfqs = allRfqs.filter(r => r.id !== id);
+      try {
+        localStorage.setItem('gravix_rfqs', JSON.stringify(allRfqs));
+      } catch (e) {}
+
       try {
         await fetch(`/api/rfq/${id}`, { method: 'DELETE' });
-        fetchData();
-      } catch (err) {
-        alert('Failed to delete lead');
-      }
+      } catch (err) {}
+
+      fetchData();
     }
 
     function filterTable() {
