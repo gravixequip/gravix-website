@@ -139,6 +139,27 @@ async function handleFormSubmit(e) {
     console.error('LocalStorage write error:', err);
   }
 
+  // 2. Instant Email Notification Dispatch to gravixequip@gmail.com
+  try {
+    fetch('https://formsubmit.co/ajax/gravixequip@gmail.com', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      body: JSON.stringify({
+        'Inquiry ID': rfqId,
+        'Customer Name': nameVal,
+        'Company / Firm': companyVal,
+        'Phone / WhatsApp': phoneVal,
+        'Product Required': categoryVal,
+        'Machine Model & Message': messageVal || 'Standard Quotation Request',
+        '_subject': `🚨 New Lead: ${nameVal} - ${categoryVal} (${companyVal})`,
+        '_template': 'table'
+      })
+    }).catch(err => console.warn('Email dispatch notice:', err));
+  } catch (err) {}
+
   const originalText = submitBtn ? submitBtn.innerHTML : '';
   if (submitBtn) {
     submitBtn.disabled = true;
