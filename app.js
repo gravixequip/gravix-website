@@ -201,3 +201,19 @@ async function handleCatalogueDownload(e) {
     }, 2000);
   }
 }
+
+// Toggle technical metallurgy spectro sheet
+function toggleTechSpecs() {
+  const panel = document.getElementById("techSpecsDetail");
+  const btn = document.getElementById("toggleTechBtn");
+  if (panel) {
+    const isHidden = panel.classList.contains("hidden");
+    panel.classList.toggle("hidden");
+    if (btn) {
+      btn.innerHTML = isHidden 
+        ? '<i data-lucide="chevron-up" class="w-4 h-4"></i> Hide Chemical Composition' 
+        : '<i data-lucide="sliders" class="w-4 h-4"></i> View Spectro Chemical Composition';
+      if (window.lucide) window.lucide.createIcons();
+    }
+  }
+}
