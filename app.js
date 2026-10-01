@@ -104,56 +104,39 @@ function requestItemQuote(itemName) {
   }
 }
 
-// RFQ Form Submission to Backend REST API & Local Storage
+// RFQ Form Submission for GitHub Pages (static hosting)
+// The inquiry is delivered by email through FormSubmit. No Netlify/server API is required.
 async function handleFormSubmit(e) {
   e.preventDefault();
   const form = e.target;
   const submitBtn = form.querySelector('button[type="submit"]');
   const successBox = document.getElementById("formSuccessMessage");
 
-  const nameVal = document.getElementById("rfqName")?.value || '';
-  const companyVal = document.getElementById("rfqCompany")?.value || 'Direct Buyer';
-  const phoneVal = document.getElementById("rfqPhone")?.value || '';
+  const nameVal = document.getElementById("rfqName")?.value.trim() || '';
+  const companyVal = document.getElementById("rfqCompany")?.value.trim() || 'Direct Buyer';
+  const phoneVal = document.getElementById("rfqPhone")?.value.trim() || '';
   const categoryVal = document.getElementById("rfqCategorySelect")?.value || 'General Inquiries';
-  const messageVal = document.getElementById("rfqMessage")?.value || '';
+  const messageVal = document.getElementById("rfqMessage")?.value.trim() || '';
   const rfqId = 'RFQ-' + Date.now().toString(36).toUpperCase();
 
-  // Anti-Spam Honeypot Bot Trap:
   const honeyVal = document.getElementById("rfqHoney")?.value;
   if (honeyVal) {
-    console.warn("Spam bot activity detected via honeypot field. Dropping silently.");
     if (successBox) {
-      successBox.innerHTML = `✓ Thank you! Your RFQ has been received.`;
+      successBox.textContent = '✓ Thank you! Your request has been received.';
       successBox.classList.remove("hidden");
     }
     form.reset();
     return;
   }
 
-  const payload = {
-    id: rfqId,
-    name: nameVal,
-    company: companyVal,
-    phone: phoneVal,
-    category: categoryVal,
-    quantity: 'Direct Inquiry',
-    message: messageVal,
-    status: 'NEW',
-    createdAt: new Date().toISOString()
-  };
-
-  // 1. Save in localStorage for instant access across tabs
-  try {
-    let existing = JSON.parse(localStorage.getItem('gravix_rfqs') || '[]');
-    existing.unshift(payload);
-    localStorage.setItem('gravix_rfqs', JSON.stringify(existing));
-  } catch (err) {
-    console.error('LocalStorage write error:', err);
+  const originalText = submitBtn ? submitBtn.innerHTML : '';
+  if (submitBtn) {
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = '<span class="animate-pulse">Sending Quote Request...</span>';
   }
 
-  // 2. Instant Email Notification Dispatch to gravixequip@gmail.com
   try {
-    fetch('https://formsubmit.co/ajax/gravixequip@gmail.com', {
+    const response = await fetch('https://formsubmit.co/ajax/gravixequip@gmail.com', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -166,44 +149,39 @@ async function handleFormSubmit(e) {
         'Phone / WhatsApp': phoneVal,
         'Product Required': categoryVal,
         'Machine Model & Message': messageVal || 'Standard Quotation Request',
-        '_subject': `🚨 New Lead: ${nameVal} - ${categoryVal} (${companyVal})`,
+        '_subject': `New Gravix RFQ: ${nameVal} - ${categoryVal}`,
         '_template': 'table',
+        '_captcha': 'false',
         '_honey': ''
       })
-    }).catch(err => console.warn('Email dispatch notice:', err));
-  } catch (err) {}
-
-  const originalText = submitBtn ? submitBtn.innerHTML : '';
-  if (submitBtn) {
-    submitBtn.disabled = true;
-    submitBtn.innerHTML = '<span class="animate-pulse">Processing Quote Request...</span>';
-  }
-
-  try {
-    const res = await fetch('/api/rfq', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload)
     });
-    const data = await res.json();
+
+    if (!response.ok) throw new Error(`Form service returned ${response.status}`);
+
     if (successBox) {
-      successBox.innerHTML = `✓ Thank you <strong>${nameVal}</strong>! Your RFQ <strong>#${data.rfq_id || rfqId}</strong> has been registered. Our engineering desk will connect with you on WhatsApp/Phone shortly.`;
+      successBox.innerHTML = `✓ Thank you <strong>${escapeForMessage(nameVal)}</strong>! Your RFQ <strong>#${rfqId}</strong> has been sent to our team. We will contact you on WhatsApp/Phone shortly.`;
       successBox.classList.remove("hidden");
     }
     form.reset();
   } catch (err) {
-    // Graceful offline fallback
+    console.error('RFQ email delivery failed:', err);
     if (successBox) {
-      successBox.innerHTML = `✓ Thank you <strong>${nameVal}</strong>! Your RFQ <strong>#${rfqId}</strong> has been logged. Our engineering desk in Naroda will connect with you shortly.`;
+      successBox.innerHTML = `We could not send the form automatically. Please contact us on <a class="underline font-bold" href="https://wa.me/919724350510" target="_blank" rel="noopener noreferrer">WhatsApp</a> or email <a class="underline font-bold" href="mailto:gravixequip@gmail.com">gravixequip@gmail.com</a>.`;
       successBox.classList.remove("hidden");
     }
-    form.reset();
   } finally {
     if (submitBtn) {
       submitBtn.disabled = false;
       submitBtn.innerHTML = originalText;
+      if (window.lucide) window.lucide.createIcons();
     }
   }
+}
+
+function escapeForMessage(value) {
+  return String(value || '').replace(/[&<>"']/g, (char) => ({
+    '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+  }[char]));
 }
 
 // Catalogue Modal
@@ -228,29 +206,55 @@ async function handleCatalogueDownload(e) {
   const form = e.target;
   const inputs = form.querySelectorAll('input');
   const notice = document.getElementById("catalogDownloadNotice");
+  const submitBtn = form.querySelector('button[type="submit"]');
+  const name = inputs[0]?.value.trim() || '';
+  const email = inputs[1]?.value.trim() || '';
+  const originalText = submitBtn ? submitBtn.innerHTML : '';
 
-  const payload = {
-    name: inputs[0]?.value || '',
-    email: inputs[1]?.value || ''
-  };
-
-  try {
-    await fetch('/api/catalog', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload)
-    });
-  } catch (err) {
-    // Graceful offline fallback
+  if (submitBtn) {
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Sending Request...';
   }
 
-  if (notice) {
-    notice.classList.remove("hidden");
+  try {
+    const response = await fetch('https://formsubmit.co/ajax/gravixequip@gmail.com', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      body: JSON.stringify({
+        'Request Type': 'Product Catalogue PDF',
+        'Customer Name': name,
+        'Customer Email': email,
+        '_subject': `Gravix Catalogue Request - ${name}`,
+        '_template': 'table',
+        '_captcha': 'false'
+      })
+    });
+
+    if (!response.ok) throw new Error(`Form service returned ${response.status}`);
+
+    if (notice) {
+      notice.textContent = '✓ Catalogue request sent. Our team will email the PDF to you.';
+      notice.classList.remove("hidden");
+    }
+    form.reset();
     setTimeout(() => {
       closeCatalogModal();
-      notice.classList.add("hidden");
-      form.reset();
-    }, 2000);
+      notice?.classList.add("hidden");
+    }, 2500);
+  } catch (err) {
+    console.error('Catalogue request failed:', err);
+    if (notice) {
+      notice.innerHTML = 'Could not send automatically. Please email <a class="underline font-bold" href="mailto:gravixequip@gmail.com">gravixequip@gmail.com</a>.';
+      notice.classList.remove("hidden");
+    }
+  } finally {
+    if (submitBtn) {
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = originalText;
+    }
   }
 }
 
