@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://gravix-equipmentsolutions-llp.netlify.app/sitemap.xml
+Sitemap: https://hellosahal.github.io/gravix-website/sitemap.xml
