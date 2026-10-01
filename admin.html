@@ -137,12 +137,16 @@
   </main>
 
   <script>
+    const API_BASE = (window.location.protocol === 'file:')
+      ? 'https://gravix-equipmentsolutions-llp.netlify.app'
+      : '';
+
     let allRfqs = [];
 
     async function fetchData() {
       let serverRfqs = [];
       try {
-        const rfqsRes = await fetch('/api/rfq');
+        const rfqsRes = await fetch(`${API_BASE}/api/rfq`);
         if (rfqsRes.ok) {
           const data = await rfqsRes.json();
           serverRfqs = data.rfqs || [];
@@ -159,7 +163,7 @@
 
       // Merge and deduplicate by id
       const map = new Map();
-      [...localRfqs, ...serverRfqs].forEach(item => {
+      [...serverRfqs, ...localRfqs].forEach(item => {
         if (item && item.id && !map.has(item.id)) {
           map.set(item.id, item);
         }
@@ -190,7 +194,7 @@
       } catch (e) {}
 
       try {
-        await fetch(`/api/rfq/${id}`, {
+        await fetch(`${API_BASE}/api/rfq/${id}`, {
           method: 'PATCH',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ status: newStatus })
@@ -208,7 +212,7 @@
       } catch (e) {}
 
       try {
-        await fetch(`/api/rfq/${id}`, { method: 'DELETE' });
+        await fetch(`${API_BASE}/api/rfq/${id}`, { method: 'DELETE' });
       } catch (err) {}
 
       fetchData();
@@ -256,6 +260,8 @@
 
     document.addEventListener('DOMContentLoaded', () => {
       fetchData();
+      // Auto-refresh every 4 seconds so incoming leads appear live!
+      setInterval(fetchData, 4000);
     });
   </script>
 </body>
