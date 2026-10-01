@@ -104,23 +104,40 @@ function requestItemQuote(itemName) {
   }
 }
 
-// RFQ Form Submission to Backend REST API
+// RFQ Form Submission to Backend REST API & Local Storage
 async function handleFormSubmit(e) {
   e.preventDefault();
   const form = e.target;
   const submitBtn = form.querySelector('button[type="submit"]');
   const successBox = document.getElementById("formSuccessMessage");
 
-  const inputs = form.querySelectorAll('input');
+  const nameVal = document.getElementById("rfqName")?.value || '';
+  const companyVal = document.getElementById("rfqCompany")?.value || 'Direct Buyer';
+  const phoneVal = document.getElementById("rfqPhone")?.value || '';
+  const categoryVal = document.getElementById("rfqCategorySelect")?.value || 'General Inquiries';
+  const messageVal = document.getElementById("rfqMessage")?.value || '';
+  const rfqId = 'RFQ-' + Date.now().toString(36).toUpperCase();
+
   const payload = {
-    name: inputs[0]?.value || '',
-    company: inputs[1]?.value || '',
-    email: inputs[2]?.value || '',
-    phone: inputs[3]?.value || '',
-    category: document.getElementById("rfqCategorySelect")?.value || 'General Inquiries',
-    quantity: inputs[4]?.value || 'Not specified',
-    message: document.getElementById("rfqMessage")?.value || ''
+    id: rfqId,
+    name: nameVal,
+    company: companyVal,
+    phone: phoneVal,
+    category: categoryVal,
+    quantity: 'Direct Inquiry',
+    message: messageVal,
+    status: 'NEW',
+    createdAt: new Date().toISOString()
   };
+
+  // 1. Save in localStorage for instant access across tabs
+  try {
+    let existing = JSON.parse(localStorage.getItem('gravix_rfqs') || '[]');
+    existing.unshift(payload);
+    localStorage.setItem('gravix_rfqs', JSON.stringify(existing));
+  } catch (err) {
+    console.error('LocalStorage write error:', err);
+  }
 
   const originalText = submitBtn ? submitBtn.innerHTML : '';
   if (submitBtn) {
@@ -136,13 +153,14 @@ async function handleFormSubmit(e) {
     });
     const data = await res.json();
     if (successBox) {
-      successBox.innerHTML = `✓ Thank you! Your RFQ <strong>#${data.rfq_id || 'CONFIRMED'}</strong> has been registered. Our engineering desk will connect with you shortly.`;
+      successBox.innerHTML = `✓ Thank you <strong>${nameVal}</strong>! Your RFQ <strong>#${data.rfq_id || rfqId}</strong> has been registered. Our engineering desk will connect with you on WhatsApp/Phone shortly.`;
       successBox.classList.remove("hidden");
     }
     form.reset();
   } catch (err) {
-    // Fallback if backend server is still connecting
+    // Graceful offline fallback
     if (successBox) {
+      successBox.innerHTML = `✓ Thank you <strong>${nameVal}</strong>! Your RFQ <strong>#${rfqId}</strong> has been logged. Our engineering desk in Naroda will connect with you shortly.`;
       successBox.classList.remove("hidden");
     }
     form.reset();
