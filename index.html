@@ -236,79 +236,63 @@
           </div>
         </div>
 
-        <!-- Hero Showcase Card / 3D Style Visualizer -->
+        <!-- Hero Showcase Card with High-Impact Quarry Visual -->
         <div class="lg:col-span-5">
-          <div class="relative rounded-2xl bg-gradient-to-b from-slate-800/90 to-slate-900 border border-slate-700/80 p-6 shadow-2xl backdrop-blur-xl">
-            <div class="absolute -top-3 right-6 bg-amber-500 text-black font-extrabold text-[11px] uppercase tracking-wider px-3 py-1 rounded shadow">
-              Heavy Duty Standard
+          <div class="relative rounded-2xl bg-gradient-to-b from-slate-800/90 to-slate-900 border border-amber-500/40 p-5 shadow-2xl backdrop-blur-xl animate-float box-glow group">
+            
+            <div class="absolute -top-3.5 right-6 bg-gradient-to-r from-amber-500 to-amber-600 text-black font-extrabold text-[11px] uppercase tracking-wider px-3.5 py-1 rounded-full shadow-lg shadow-amber-500/30 flex items-center gap-1.5">
+              <span class="w-2 h-2 rounded-full bg-black animate-ping"></span>
+              Heavy Duty Quarry Grade
             </div>
 
-            <div class="flex items-center justify-between pb-4 border-b border-slate-800">
+            <div class="flex items-center justify-between pb-3.5 border-b border-slate-800">
               <div>
-                <h3 class="font-heading text-lg font-bold text-white">CAT & JCB Series Point</h3>
-                <p class="text-xs text-slate-400">Forged & Cast Alloy Steel (Low Alloy / Manganese)</p>
+                <h3 class="font-heading text-lg font-bold text-white flex items-center gap-2">
+                  <i data-lucide="zap" class="w-4 h-4 text-amber-400"></i> Excavator Bucket Tooth Point
+                </h3>
+                <p class="text-xs text-slate-400">JCB 3DX • CAT 320D • Komatsu PC200 • Tata Hitachi</p>
               </div>
-              <span class="text-xs bg-slate-800 border border-slate-700 px-2.5 py-1 rounded text-amber-400 font-mono">Series 1U3302</span>
+              <span class="text-xs bg-slate-800/90 border border-amber-500/40 px-2.5 py-1 rounded text-amber-400 font-mono font-bold">1U3302RC</span>
             </div>
 
-            <!-- Visual Representation -->
-            <div class="my-6 py-10 px-4 bg-[#0a0e17] rounded-xl border border-slate-800/80 flex flex-col items-center justify-center relative overflow-hidden group">
-              <!-- Grid background -->
-              <div class="absolute inset-0 opacity-10 bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:16px_16px]"></div>
+            <!-- Photorealistic High-Impact Action Visual -->
+            <div class="my-4 rounded-xl overflow-hidden border border-slate-700/80 relative shadow-inner group">
+              <img src="hero-bucket.jpg" alt="Heavy-duty Excavator Bucket Tooth Point Striking Rock with Sparks" class="w-full h-56 object-cover transform group-hover:scale-105 transition-transform duration-700" />
               
-              <!-- SVG Schematic of Heavy Excavator Bucket Tooth -->
-              <svg viewBox="0 0 320 180" class="w-64 h-36 filter drop-shadow-[0_10px_15px_rgba(245,158,11,0.25)] group-hover:scale-105 transition-transform duration-500">
-                <defs>
-                  <linearGradient id="metalGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" stop-color="#4b5563" />
-                    <stop offset="40%" stop-color="#9ca3af" />
-                    <stop offset="70%" stop-color="#374151" />
-                    <stop offset="100%" stop-color="#1f2937" />
-                  </linearGradient>
-                  <linearGradient id="edgeGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-                    <stop offset="0%" stop-color="#f59e0b" />
-                    <stop offset="100%" stop-color="#d97706" />
-                  </linearGradient>
-                </defs>
-                <!-- Body of tooth -->
-                <polygon points="40,50 180,35 290,80 290,95 180,145 40,130 55,90" fill="url(#metalGrad)" stroke="#6b7280" stroke-width="2" />
-                <!-- Penetrater Tip -->
-                <polygon points="250,70 290,80 290,95 250,110 235,90" fill="url(#edgeGrad)" opacity="0.9" />
-                <!-- Pin Hole -->
-                <ellipse cx="100" cy="90" rx="14" ry="20" fill="#0b0f19" stroke="#9ca3af" stroke-width="2" />
-                <!-- Rib / Reinforcement -->
-                <path d="M120 70 L230 85 L230 95 L120 110 Z" fill="#111827" opacity="0.4" />
-                <!-- Highlight line -->
-                <line x1="50" y1="58" x2="280" y2="82" stroke="#ffffff" stroke-width="1.5" opacity="0.6" />
-              </svg>
+              <div class="absolute inset-0 bg-gradient-to-t from-[#090d16] via-transparent to-transparent opacity-80"></div>
+              
+              <!-- Floating Live Spec Badges on Image -->
+              <div class="absolute top-3 left-3 bg-[#070b13]/85 backdrop-blur-md border border-amber-500/40 text-amber-400 text-[10px] font-bold px-2.5 py-1 rounded-md shadow-lg flex items-center gap-1.5">
+                <i data-lucide="flame" class="w-3.5 h-3.5 text-amber-400 animate-pulse"></i> 48-52 HRC Quenched
+              </div>
 
-              <div class="mt-4 flex items-center gap-6 text-xs text-slate-300">
-                <span class="flex items-center gap-1.5">
-                  <i data-lucide="check" class="w-3.5 h-3.5 text-amber-400"></i> Self-Sharpening Tip
+              <div class="absolute bottom-3 left-3 right-3 flex items-center justify-between text-xs text-white">
+                <span class="bg-black/75 backdrop-blur-sm px-2.5 py-1 rounded text-[11px] font-mono border border-slate-700 text-slate-200">
+                  EN-8 / EN-19 Alloy Steel
                 </span>
-                <span class="flex items-center gap-1.5">
-                  <i data-lucide="check" class="w-3.5 h-3.5 text-amber-400"></i> High Impact Quenched
+                <span class="bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 text-[11px] font-bold px-2.5 py-1 rounded backdrop-blur-sm">
+                  ✓ 100% Fit Guaranteed
                 </span>
               </div>
             </div>
 
             <!-- Spec Grid in Card -->
-            <div class="grid grid-cols-2 gap-3 text-xs">
-              <div class="p-2.5 rounded bg-slate-800/60 border border-slate-700/50">
-                <span class="text-slate-400 block text-[10px] uppercase">Tensile Strength</span>
-                <span class="font-bold text-white font-mono">1400 - 1650 MPa</span>
+            <div class="grid grid-cols-2 gap-2.5 text-xs">
+              <div class="p-2.5 rounded-lg bg-slate-950/70 border border-slate-800">
+                <span class="text-slate-400 block text-[10px] uppercase tracking-wider font-semibold">Tensile Strength</span>
+                <span class="font-bold text-white font-mono text-sm">1400 - 1650 MPa</span>
               </div>
-              <div class="p-2.5 rounded bg-slate-800/60 border border-slate-700/50">
-                <span class="text-slate-400 block text-[10px] uppercase">Impact Energy</span>
-                <span class="font-bold text-white font-mono">â‰¥ 25 J (at -20Â°C)</span>
+              <div class="p-2.5 rounded-lg bg-slate-950/70 border border-slate-800">
+                <span class="text-slate-400 block text-[10px] uppercase tracking-wider font-semibold">Impact Toughness</span>
+                <span class="font-bold text-white font-mono text-sm">≥ 28 J (-20°C)</span>
               </div>
-              <div class="p-2.5 rounded bg-slate-800/60 border border-slate-700/50">
-                <span class="text-slate-400 block text-[10px] uppercase">Lock Pin System</span>
-                <span class="font-bold text-amber-400 font-mono">Side Lock / Vertical Pin</span>
+              <div class="p-2.5 rounded-lg bg-slate-950/70 border border-slate-800">
+                <span class="text-slate-400 block text-[10px] uppercase tracking-wider font-semibold">Locking System</span>
+                <span class="font-bold text-amber-400 font-mono text-xs">Horizontal & Vertical Pin</span>
               </div>
-              <div class="p-2.5 rounded bg-slate-800/60 border border-slate-700/50">
-                <span class="text-slate-400 block text-[10px] uppercase">Foundry Guarantee</span>
-                <span class="font-bold text-emerald-400 font-mono">Zero Breakage Defect</span>
+              <div class="p-2.5 rounded-lg bg-slate-950/70 border border-slate-800">
+                <span class="text-slate-400 block text-[10px] uppercase tracking-wider font-semibold">Warranty / Life</span>
+                <span class="font-bold text-emerald-400 font-mono text-xs">Zero Snapping Guarantee</span>
               </div>
             </div>
           </div>
@@ -352,239 +336,459 @@
     </div>
   </section>
 
-  <!-- Interactive Product Showcase with Filter Tabs -->
+  <!-- Interactive Product Showcase with Live Search & 60Hz Filter Tabs -->
   <section id="products" class="py-20 bg-[#0b0f19]">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
+      <div class="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-6">
         <div>
-          <span class="text-amber-500 font-heading font-semibold text-xs tracking-widest uppercase">Engineered for Abrasion</span>
+          <span class="text-amber-500 font-heading font-semibold text-xs tracking-widest uppercase flex items-center gap-1.5">
+            <span class="w-2 h-2 rounded-full bg-amber-400 animate-ping"></span>
+            Direct Manufacturing Line & G.E.T. Spares
+          </span>
           <h2 class="font-heading text-3xl sm:text-4xl font-extrabold uppercase text-white mt-1">
-            Manufacturing Line & Spare Products
+            Excavator Tooth Points, Cutters & Castings
           </h2>
           <p class="text-slate-400 text-sm max-w-xl mt-2">
-            Manufactured using induction furnace molten alloy steel casting, heat treated in PLC-controlled normalizing and tempering ovens.
+            Manufactured from high-tensile EN-8, EN-19 and Cr-Mo alloy steel. Quenched and tempered for extreme quarry fracturing, mining, and earth excavation.
           </p>
         </div>
 
-        <!-- Filter Buttons -->
-        <div class="flex flex-wrap gap-2 bg-slate-900/80 p-1.5 rounded-xl border border-slate-800" id="productFilterNav">
-          <button onclick="filterProducts('all')" class="filter-btn active px-4 py-2 rounded-lg text-xs font-semibold uppercase tracking-wider text-slate-300 hover:text-white transition">All Items</button>
-          <button onclick="filterProducts('tooth-points')" class="filter-btn px-4 py-2 rounded-lg text-xs font-semibold uppercase tracking-wider text-slate-300 hover:text-white transition">Tooth Points</button>
-          <button onclick="filterProducts('side-cutters')" class="filter-btn px-4 py-2 rounded-lg text-xs font-semibold uppercase tracking-wider text-slate-300 hover:text-white transition">Side Cutters</button>
-          <button onclick="filterProducts('adapters')" class="filter-btn px-4 py-2 rounded-lg text-xs font-semibold uppercase tracking-wider text-slate-300 hover:text-white transition">Adapters & Pins</button>
-          <button onclick="filterProducts('castings')" class="filter-btn px-4 py-2 rounded-lg text-xs font-semibold uppercase tracking-wider text-slate-300 hover:text-white transition">Foundry Castings</button>
+        <!-- Live Instant Search Bar -->
+        <div class="w-full md:w-80">
+          <div class="relative">
+            <i data-lucide="search" class="w-4 h-4 text-amber-500 absolute left-3.5 top-3"></i>
+            <input type="text" id="liveProductSearch" oninput="liveSearchProducts()" placeholder="Quick search: 3DX, 1U3302, PC200, EX200..." class="w-full pl-10 pr-4 py-2.5 rounded-xl bg-slate-900/90 border border-slate-700/80 text-white text-xs placeholder:text-slate-500 focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500 transition shadow-inner" />
+          </div>
         </div>
       </div>
 
-      <!-- Products Grid -->
-      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8" id="productsGrid">
+      <!-- Filter Buttons Nav -->
+      <div class="flex flex-wrap gap-2 bg-slate-900/80 p-1.5 rounded-xl border border-slate-800 mb-10" id="productFilterNav">
+        <button onclick="filterProducts('all')" class="filter-btn active px-4 py-2 rounded-lg text-xs font-semibold uppercase tracking-wider text-slate-300 hover:text-white transition">All Parts (12)</button>
+        <button onclick="filterProducts('tooth-points')" class="filter-btn px-4 py-2 rounded-lg text-xs font-semibold uppercase tracking-wider text-slate-300 hover:text-white transition">Tooth Points (6)</button>
+        <button onclick="filterProducts('side-cutters')" class="filter-btn px-4 py-2 rounded-lg text-xs font-semibold uppercase tracking-wider text-slate-300 hover:text-white transition">Side Cutters (2)</button>
+        <button onclick="filterProducts('adapters')" class="filter-btn px-4 py-2 rounded-lg text-xs font-semibold uppercase tracking-wider text-slate-300 hover:text-white transition">Adapters & Pins (2)</button>
+        <button onclick="filterProducts('castings')" class="filter-btn px-4 py-2 rounded-lg text-xs font-semibold uppercase tracking-wider text-slate-300 hover:text-white transition">Foundry Castings (2)</button>
+      </div>
 
-        <!-- Product 1 -->
-        <div class="product-card group rounded-2xl bg-slate-900/70 border border-slate-800 hover:border-amber-500/60 transition-all duration-300 overflow-hidden flex flex-col" data-category="tooth-points">
-          <div class="h-48 bg-gradient-to-tr from-slate-950 to-slate-800 relative flex items-center justify-center p-6">
-            <div class="w-24 h-24 rounded-full bg-amber-500/10 absolute -bottom-6 -right-6 blur-xl"></div>
-            <!-- Product Representation -->
+      <!-- Products Grid -->
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6" id="productsGrid">
+
+        <!-- 1. JCB 3DX & JS205 Tooth Point -->
+        <div class="product-card group rounded-2xl bg-slate-900/70 border border-slate-800 hover:border-amber-500/60 transition-all duration-300 overflow-hidden flex flex-col" data-category="tooth-points" data-search="jcb 3dx js205 js140 tooth point 531-03205 en-8 en-19">
+          <div class="h-44 bg-gradient-to-tr from-slate-950 to-slate-800 relative flex items-center justify-center p-6">
+            <div class="w-20 h-20 rounded-full bg-amber-500/10 absolute -bottom-4 -right-4 blur-xl"></div>
             <div class="flex flex-col items-center">
-              <i data-lucide="triangle" class="w-20 h-20 text-amber-500/90 group-hover:rotate-12 transition-transform duration-300"></i>
-              <span class="text-[11px] font-mono text-slate-400 mt-2">Part No: KND-J300-RC</span>
+              <i data-lucide="triangle" class="w-16 h-16 text-amber-500/90 group-hover:rotate-12 transition-transform duration-300"></i>
+              <span class="text-[11px] font-mono text-amber-400 font-bold mt-2">Part No: JCB-3DX-53103</span>
             </div>
             <span class="absolute top-3 left-3 bg-amber-500/20 text-amber-400 border border-amber-500/40 text-[10px] font-bold px-2 py-0.5 rounded uppercase">
-              Rock Chisel
+              JCB Heavy Duty
             </span>
           </div>
-          <div class="p-6 flex-1 flex flex-col justify-between">
+          <div class="p-5 flex-1 flex flex-col justify-between">
             <div>
-              <h3 class="font-heading font-bold text-lg text-white group-hover:text-amber-400 transition">J-Series 1U3302RC Rock Chisel Tooth Point</h3>
-              <p class="text-xs text-slate-400 mt-2">
-                Heavy duty rock tooth for hard strata, rock fracturing and high-impact mining. Self-sharpening geometry ensures faster cycle time.
+              <h3 class="font-heading font-bold text-base text-white group-hover:text-amber-400 transition">JCB 3DX & JS205 Bucket Tooth Points</h3>
+              <p class="text-xs text-slate-400 mt-1.5 leading-relaxed">
+                Standard and heavy-duty rock chisel points built for JCB backhoe loaders and excavators. High tensile impact durability.
               </p>
               <div class="mt-4 grid grid-cols-2 gap-2 text-[11px] font-mono text-slate-300 border-t border-slate-800/80 pt-3">
-                <div><span class="text-slate-500">Weight:</span> 5.80 kg</div>
+                <div><span class="text-slate-500">Fit:</span> JCB 3DX / JS205</div>
+                <div><span class="text-slate-500">Weight:</span> 4.50 - 5.20 kg</div>
                 <div><span class="text-slate-500">Hardness:</span> 48-52 HRC</div>
-                <div><span class="text-slate-500">Fit:</span> CAT 320 / JCB JS200</div>
-                <div><span class="text-slate-500">Material:</span> Cr-Mo Low Alloy</div>
+                <div><span class="text-slate-500">Steel:</span> EN-8 / EN-19</div>
               </div>
             </div>
-            <div class="mt-6 pt-4 border-t border-slate-800 flex items-center justify-between">
+            <div class="mt-5 pt-3.5 border-t border-slate-800 flex items-center justify-between">
               <span class="text-xs font-semibold text-emerald-400 flex items-center gap-1">
-                <i data-lucide="check-circle" class="w-3.5 h-3.5"></i> In Ready Stock
+                <i data-lucide="check-circle" class="w-3.5 h-3.5"></i> In Stock
               </span>
-              <button onclick="requestItemQuote('J-Series 1U3302RC Rock Chisel')" class="text-xs font-bold text-amber-400 hover:text-amber-300 uppercase tracking-wider flex items-center gap-1">
+              <button onclick="requestItemQuote('JCB 3DX & JS205 Tooth Points (531-03205)')" class="text-xs font-bold text-amber-400 hover:text-amber-300 uppercase tracking-wider flex items-center gap-1">
                 Inquire <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
               </button>
             </div>
           </div>
         </div>
 
-        <!-- Product 2 -->
-        <div class="product-card group rounded-2xl bg-slate-900/70 border border-slate-800 hover:border-amber-500/60 transition-all duration-300 overflow-hidden flex flex-col" data-category="tooth-points">
-          <div class="h-48 bg-gradient-to-tr from-slate-950 to-slate-800 relative flex items-center justify-center p-6">
+        <!-- 2. CAT 320D & 424 J-Series Rock Chisel -->
+        <div class="product-card group rounded-2xl bg-slate-900/70 border border-slate-800 hover:border-amber-500/60 transition-all duration-300 overflow-hidden flex flex-col" data-category="tooth-points" data-search="cat caterpillar 320d 424 1u3302 1u3302rc j-series rock chisel">
+          <div class="h-44 bg-gradient-to-tr from-slate-950 to-slate-800 relative flex items-center justify-center p-6">
             <div class="flex flex-col items-center">
-              <i data-lucide="zap" class="w-20 h-20 text-amber-500/90 group-hover:scale-110 transition-transform duration-300"></i>
-              <span class="text-[11px] font-mono text-slate-400 mt-2">Part No: KND-T200-TL</span>
+              <i data-lucide="zap" class="w-16 h-16 text-amber-500/90 group-hover:scale-110 transition-transform duration-300"></i>
+              <span class="text-[11px] font-mono text-amber-400 font-bold mt-2">Part No: 1U3302RC / J300</span>
             </div>
             <span class="absolute top-3 left-3 bg-amber-500/20 text-amber-400 border border-amber-500/40 text-[10px] font-bold px-2 py-0.5 rounded uppercase">
-              Tiger Long
+              CAT Rock Chisel
             </span>
           </div>
-          <div class="p-6 flex-1 flex flex-col justify-between">
+          <div class="p-5 flex-1 flex flex-col justify-between">
             <div>
-              <h3 class="font-heading font-bold text-lg text-white group-hover:text-amber-400 transition">PC200 Tiger Tooth Point (Komatsu & Hitachi)</h3>
-              <p class="text-xs text-slate-400 mt-2">
-                Pointed tiger profile engineered for maximum penetration into frozen ground, shale, hard clay, and compact gravel.
+              <h3 class="font-heading font-bold text-base text-white group-hover:text-amber-400 transition">CAT 320D / 424 J-Series 1U3302RC Point</h3>
+              <p class="text-xs text-slate-400 mt-1.5 leading-relaxed">
+                Aggressive self-sharpening rock chisel tip designed for hard rock fracturing, granite quarries, and heavy infrastructure.
               </p>
               <div class="mt-4 grid grid-cols-2 gap-2 text-[11px] font-mono text-slate-300 border-t border-slate-800/80 pt-3">
-                <div><span class="text-slate-500">Weight:</span> 4.90 kg</div>
+                <div><span class="text-slate-500">Fit:</span> CAT 320 / 325</div>
+                <div><span class="text-slate-500">Weight:</span> 5.85 kg</div>
                 <div><span class="text-slate-500">Hardness:</span> 50-53 HRC</div>
-                <div><span class="text-slate-500">Fit:</span> Komatsu PC200 / PC210</div>
-                <div><span class="text-slate-500">Pin Type:</span> Horizontal Pin</div>
+                <div><span class="text-slate-500">Pin:</span> 9J2308 Side Pin</div>
               </div>
             </div>
-            <div class="mt-6 pt-4 border-t border-slate-800 flex items-center justify-between">
+            <div class="mt-5 pt-3.5 border-t border-slate-800 flex items-center justify-between">
               <span class="text-xs font-semibold text-emerald-400 flex items-center gap-1">
                 <i data-lucide="check-circle" class="w-3.5 h-3.5"></i> Export Grade
               </span>
-              <button onclick="requestItemQuote('PC200 Tiger Tooth Point')" class="text-xs font-bold text-amber-400 hover:text-amber-300 uppercase tracking-wider flex items-center gap-1">
+              <button onclick="requestItemQuote('CAT 1U3302RC Rock Chisel Point')" class="text-xs font-bold text-amber-400 hover:text-amber-300 uppercase tracking-wider flex items-center gap-1">
                 Inquire <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
               </button>
             </div>
           </div>
         </div>
 
-        <!-- Product 3: Side Cutters -->
-        <div class="product-card group rounded-2xl bg-slate-900/70 border border-slate-800 hover:border-amber-500/60 transition-all duration-300 overflow-hidden flex flex-col" data-category="side-cutters">
-          <div class="h-48 bg-gradient-to-tr from-slate-950 to-slate-800 relative flex items-center justify-center p-6">
+        <!-- 3. Komatsu PC200 & PC210 Tiger Teeth -->
+        <div class="product-card group rounded-2xl bg-slate-900/70 border border-slate-800 hover:border-amber-500/60 transition-all duration-300 overflow-hidden flex flex-col" data-category="tooth-points" data-search="komatsu l&t pc200 pc210 pc300 205-70-19570 tiger tooth point">
+          <div class="h-44 bg-gradient-to-tr from-slate-950 to-slate-800 relative flex items-center justify-center p-6">
             <div class="flex flex-col items-center">
-              <i data-lucide="scissors" class="w-20 h-20 text-amber-500/90 group-hover:rotate-45 transition-transform duration-300"></i>
-              <span class="text-[11px] font-mono text-slate-400 mt-2">Part No: KND-SC-JCB3DX</span>
+              <i data-lucide="crosshair" class="w-16 h-16 text-amber-500/90 group-hover:rotate-45 transition-transform duration-300"></i>
+              <span class="text-[11px] font-mono text-amber-400 font-bold mt-2">Part No: 205-70-19570</span>
             </div>
             <span class="absolute top-3 left-3 bg-blue-500/20 text-blue-400 border border-blue-500/40 text-[10px] font-bold px-2 py-0.5 rounded uppercase">
-              Side Cutter Set
+              Komatsu PC200
             </span>
           </div>
-          <div class="p-6 flex-1 flex flex-col justify-between">
+          <div class="p-5 flex-1 flex flex-col justify-between">
             <div>
-              <h3 class="font-heading font-bold text-lg text-white group-hover:text-amber-400 transition">JCB 3DX & 4DX Heavy Duty Side Cutters</h3>
-              <p class="text-xs text-slate-400 mt-2">
-                Left and Right high-strength side cutters protecting bucket cheek plates while maintaining clean trenching widths.
+              <h3 class="font-heading font-bold text-base text-white group-hover:text-amber-400 transition">Komatsu PC200 & PC210 Tiger Point</h3>
+              <p class="text-xs text-slate-400 mt-1.5 leading-relaxed">
+                Pointed tiger profile engineered for maximum penetration into frozen ground, compact gravel, hard clay, and shale.
+              </p>
+              <div class="mt-4 grid grid-cols-2 gap-2 text-[11px] font-mono text-slate-300 border-t border-slate-800/80 pt-3">
+                <div><span class="text-slate-500">Fit:</span> PC200 / PC210 / PC220</div>
+                <div><span class="text-slate-500">Weight:</span> 4.90 kg</div>
+                <div><span class="text-slate-500">Hardness:</span> 49-53 HRC</div>
+                <div><span class="text-slate-500">Pin Type:</span> Horizontal Pin</div>
+              </div>
+            </div>
+            <div class="mt-5 pt-3.5 border-t border-slate-800 flex items-center justify-between">
+              <span class="text-xs font-semibold text-emerald-400 flex items-center gap-1">
+                <i data-lucide="check-circle" class="w-3.5 h-3.5"></i> High Penetration
+              </span>
+              <button onclick="requestItemQuote('Komatsu PC200 Tiger Tooth Point (205-70-19570)')" class="text-xs font-bold text-amber-400 hover:text-amber-300 uppercase tracking-wider flex items-center gap-1">
+                Inquire <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4. Tata Hitachi EX200 & ZX210 Super Penetrator -->
+        <div class="product-card group rounded-2xl bg-slate-900/70 border border-slate-800 hover:border-amber-500/60 transition-all duration-300 overflow-hidden flex flex-col" data-category="tooth-points" data-search="tata hitachi ex200 ex210 ex100 zx210 zx350 super penetrator">
+          <div class="h-44 bg-gradient-to-tr from-slate-950 to-slate-800 relative flex items-center justify-center p-6">
+            <div class="flex flex-col items-center">
+              <i data-lucide="target" class="w-16 h-16 text-amber-500/90 group-hover:scale-110 transition-transform duration-300"></i>
+              <span class="text-[11px] font-mono text-amber-400 font-bold mt-2">Part No: TH-EX200-SP</span>
+            </div>
+            <span class="absolute top-3 left-3 bg-amber-500/20 text-amber-400 border border-amber-500/40 text-[10px] font-bold px-2 py-0.5 rounded uppercase">
+              Hitachi Series
+            </span>
+          </div>
+          <div class="p-5 flex-1 flex flex-col justify-between">
+            <div>
+              <h3 class="font-heading font-bold text-base text-white group-hover:text-amber-400 transition">Tata Hitachi EX200 / ZX210 Point</h3>
+              <p class="text-xs text-slate-400 mt-1.5 leading-relaxed">
+                Reinforced ribs on top and bottom faces to distribute extreme bending stresses during heavy bench excavation.
+              </p>
+              <div class="mt-4 grid grid-cols-2 gap-2 text-[11px] font-mono text-slate-300 border-t border-slate-800/80 pt-3">
+                <div><span class="text-slate-500">Fit:</span> EX200 / ZX200 / ZX210</div>
+                <div><span class="text-slate-500">Weight:</span> 5.10 kg</div>
+                <div><span class="text-slate-500">Hardness:</span> 48-52 HRC</div>
+                <div><span class="text-slate-500">Steel:</span> Low Alloy Cast Steel</div>
+              </div>
+            </div>
+            <div class="mt-5 pt-3.5 border-t border-slate-800 flex items-center justify-between">
+              <span class="text-xs font-semibold text-emerald-400 flex items-center gap-1">
+                <i data-lucide="check-circle" class="w-3.5 h-3.5"></i> Quarry Tested
+              </span>
+              <button onclick="requestItemQuote('Tata Hitachi EX200 Tooth Point')" class="text-xs font-bold text-amber-400 hover:text-amber-300 uppercase tracking-wider flex items-center gap-1">
+                Inquire <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 5. Volvo EC210 & EC290 Heavy Excavator Point -->
+        <div class="product-card group rounded-2xl bg-slate-900/70 border border-slate-800 hover:border-amber-500/60 transition-all duration-300 overflow-hidden flex flex-col" data-category="tooth-points" data-search="volvo ec210 ec240 ec290 ec360 14523654 tooth point">
+          <div class="h-44 bg-gradient-to-tr from-slate-950 to-slate-800 relative flex items-center justify-center p-6">
+            <div class="flex flex-col items-center">
+              <i data-lucide="shield" class="w-16 h-16 text-amber-500/90 group-hover:scale-110 transition-transform duration-300"></i>
+              <span class="text-[11px] font-mono text-amber-400 font-bold mt-2">Part No: VO-14523654</span>
+            </div>
+            <span class="absolute top-3 left-3 bg-amber-500/20 text-amber-400 border border-amber-500/40 text-[10px] font-bold px-2 py-0.5 rounded uppercase">
+              Volvo Series
+            </span>
+          </div>
+          <div class="p-5 flex-1 flex flex-col justify-between">
+            <div>
+              <h3 class="font-heading font-bold text-base text-white group-hover:text-amber-400 transition">Volvo EC210 & EC290 Heavy Tooth</h3>
+              <p class="text-xs text-slate-400 mt-1.5 leading-relaxed">
+                Superior manganese-molybdenum alloy with specialized nose geometry ensuring firm grip in high tonnage mining cycles.
+              </p>
+              <div class="mt-4 grid grid-cols-2 gap-2 text-[11px] font-mono text-slate-300 border-t border-slate-800/80 pt-3">
+                <div><span class="text-slate-500">Fit:</span> Volvo EC210 / EC240</div>
+                <div><span class="text-slate-500">Weight:</span> 5.40 kg</div>
+                <div><span class="text-slate-500">Hardness:</span> 50-53 HRC</div>
+                <div><span class="text-slate-500">Pin:</span> Heavy Spring Lock</div>
+              </div>
+            </div>
+            <div class="mt-5 pt-3.5 border-t border-slate-800 flex items-center justify-between">
+              <span class="text-xs font-semibold text-emerald-400 flex items-center gap-1">
+                <i data-lucide="check-circle" class="w-3.5 h-3.5"></i> OEM Spec
+              </span>
+              <button onclick="requestItemQuote('Volvo EC210 Tooth Point')" class="text-xs font-bold text-amber-400 hover:text-amber-300 uppercase tracking-wider flex items-center gap-1">
+                Inquire <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 6. Hyundai Robex R210 & R220 Rock Point -->
+        <div class="product-card group rounded-2xl bg-slate-900/70 border border-slate-800 hover:border-amber-500/60 transition-all duration-300 overflow-hidden flex flex-col" data-category="tooth-points" data-search="hyundai robex r210 r215 r220 61q6-31310 tooth point">
+          <div class="h-44 bg-gradient-to-tr from-slate-950 to-slate-800 relative flex items-center justify-center p-6">
+            <div class="flex flex-col items-center">
+              <i data-lucide="hammer" class="w-16 h-16 text-amber-500/90 group-hover:rotate-12 transition-transform duration-300"></i>
+              <span class="text-[11px] font-mono text-amber-400 font-bold mt-2">Part No: 61Q6-31310</span>
+            </div>
+            <span class="absolute top-3 left-3 bg-amber-500/20 text-amber-400 border border-amber-500/40 text-[10px] font-bold px-2 py-0.5 rounded uppercase">
+              Hyundai Robex
+            </span>
+          </div>
+          <div class="p-5 flex-1 flex flex-col justify-between">
+            <div>
+              <h3 class="font-heading font-bold text-base text-white group-hover:text-amber-400 transition">Hyundai Robex R210 / R220 Point</h3>
+              <p class="text-xs text-slate-400 mt-1.5 leading-relaxed">
+                Heavy duty rock teeth with deep pocket profile ensuring maximum wear metal utilization before replacement.
+              </p>
+              <div class="mt-4 grid grid-cols-2 gap-2 text-[11px] font-mono text-slate-300 border-t border-slate-800/80 pt-3">
+                <div><span class="text-slate-500">Fit:</span> R210-7 / R215 / R220</div>
+                <div><span class="text-slate-500">Weight:</span> 5.15 kg</div>
+                <div><span class="text-slate-500">Hardness:</span> 48-52 HRC</div>
+                <div><span class="text-slate-500">Pin:</span> 61E5-11150</div>
+              </div>
+            </div>
+            <div class="mt-5 pt-3.5 border-t border-slate-800 flex items-center justify-between">
+              <span class="text-xs font-semibold text-emerald-400 flex items-center gap-1">
+                <i data-lucide="check-circle" class="w-3.5 h-3.5"></i> Ready Stock
+              </span>
+              <button onclick="requestItemQuote('Hyundai R210 Rock Tooth Point')" class="text-xs font-bold text-amber-400 hover:text-amber-300 uppercase tracking-wider flex items-center gap-1">
+                Inquire <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 7. JCB 3DX & 4DX Side Cutters (LH & RH Pair) -->
+        <div class="product-card group rounded-2xl bg-slate-900/70 border border-slate-800 hover:border-amber-500/60 transition-all duration-300 overflow-hidden flex flex-col" data-category="side-cutters" data-search="jcb 3dx 4dx side cutter corner teeth left right lh rh pair">
+          <div class="h-44 bg-gradient-to-tr from-slate-950 to-slate-800 relative flex items-center justify-center p-6">
+            <div class="flex flex-col items-center">
+              <i data-lucide="scissors" class="w-16 h-16 text-amber-500/90 group-hover:rotate-45 transition-transform duration-300"></i>
+              <span class="text-[11px] font-mono text-amber-400 font-bold mt-2">Part No: KND-SC-JCB3DX</span>
+            </div>
+            <span class="absolute top-3 left-3 bg-blue-500/20 text-blue-400 border border-blue-500/40 text-[10px] font-bold px-2 py-0.5 rounded uppercase">
+              LH + RH Set
+            </span>
+          </div>
+          <div class="p-5 flex-1 flex flex-col justify-between">
+            <div>
+              <h3 class="font-heading font-bold text-base text-white group-hover:text-amber-400 transition">JCB 3DX & 4DX Heavy Side Cutters</h3>
+              <p class="text-xs text-slate-400 mt-1.5 leading-relaxed">
+                Left and Right bolt-on corner cutters protecting bucket cheek plates while maintaining clean trenching widths.
               </p>
               <div class="mt-4 grid grid-cols-2 gap-2 text-[11px] font-mono text-slate-300 border-t border-slate-800/80 pt-3">
                 <div><span class="text-slate-500">Pairs:</span> LH + RH Complete</div>
-                <div><span class="text-slate-500">Bolt Holes:</span> 3/4" Counter Bore</div>
+                <div><span class="text-slate-500">Holes:</span> 3/4" Counter Bore</div>
                 <div><span class="text-slate-500">Thickness:</span> 20mm - 25mm</div>
-                <div><span class="text-slate-500">Steel:</span> Wear Resistant Boron</div>
+                <div><span class="text-slate-500">Steel:</span> Boron Cast Steel</div>
               </div>
             </div>
-            <div class="mt-6 pt-4 border-t border-slate-800 flex items-center justify-between">
+            <div class="mt-5 pt-3.5 border-t border-slate-800 flex items-center justify-between">
               <span class="text-xs font-semibold text-emerald-400 flex items-center gap-1">
-                <i data-lucide="check-circle" class="w-3.5 h-3.5"></i> In Ready Stock
+                <i data-lucide="check-circle" class="w-3.5 h-3.5"></i> High Demand
               </span>
-              <button onclick="requestItemQuote('JCB 3DX Side Cutters (LH/RH)')" class="text-xs font-bold text-amber-400 hover:text-amber-300 uppercase tracking-wider flex items-center gap-1">
+              <button onclick="requestItemQuote('JCB 3DX Side Cutters (LH/RH Set)')" class="text-xs font-bold text-amber-400 hover:text-amber-300 uppercase tracking-wider flex items-center gap-1">
                 Inquire <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
               </button>
             </div>
           </div>
         </div>
 
-        <!-- Product 4: Adapters & Pins -->
-        <div class="product-card group rounded-2xl bg-slate-900/70 border border-slate-800 hover:border-amber-500/60 transition-all duration-300 overflow-hidden flex flex-col" data-category="adapters">
-          <div class="h-48 bg-gradient-to-tr from-slate-950 to-slate-800 relative flex items-center justify-center p-6">
+        <!-- 8. Tata Hitachi & Komatsu Excavator Side Cutters -->
+        <div class="product-card group rounded-2xl bg-slate-900/70 border border-slate-800 hover:border-amber-500/60 transition-all duration-300 overflow-hidden flex flex-col" data-category="side-cutters" data-search="hitachi ex200 komatsu pc200 side cutters cheek wear plates">
+          <div class="h-44 bg-gradient-to-tr from-slate-950 to-slate-800 relative flex items-center justify-center p-6">
             <div class="flex flex-col items-center">
-              <i data-lucide="cpu" class="w-20 h-20 text-amber-500/90 group-hover:scale-105 transition-transform duration-300"></i>
-              <span class="text-[11px] font-mono text-slate-400 mt-2">Part No: KND-AD-CAT320</span>
+              <i data-lucide="layers" class="w-16 h-16 text-amber-500/90 group-hover:scale-105 transition-transform duration-300"></i>
+              <span class="text-[11px] font-mono text-amber-400 font-bold mt-2">Part No: SC-EX200-HD</span>
+            </div>
+            <span class="absolute top-3 left-3 bg-blue-500/20 text-blue-400 border border-blue-500/40 text-[10px] font-bold px-2 py-0.5 rounded uppercase">
+              Heavy 20-Ton Class
+            </span>
+          </div>
+          <div class="p-5 flex-1 flex flex-col justify-between">
+            <div>
+              <h3 class="font-heading font-bold text-base text-white group-hover:text-amber-400 transition">EX200 & PC200 Heavy Side Cutters</h3>
+              <p class="text-xs text-slate-400 mt-1.5 leading-relaxed">
+                Wear protection corner plates for 20-ton excavators. Prevents bucket side scallop wear during deep trench digging.
+              </p>
+              <div class="mt-4 grid grid-cols-2 gap-2 text-[11px] font-mono text-slate-300 border-t border-slate-800/80 pt-3">
+                <div><span class="text-slate-500">Fit:</span> EX200 / PC200 / R210</div>
+                <div><span class="text-slate-500">Weight:</span> 12.5 kg / side</div>
+                <div><span class="text-slate-500">Hardness:</span> 48-52 HRC</div>
+                <div><span class="text-slate-500">Bolts:</span> Grade 10.9 Plow Bolts</div>
+              </div>
+            </div>
+            <div class="mt-5 pt-3.5 border-t border-slate-800 flex items-center justify-between">
+              <span class="text-xs font-semibold text-emerald-400 flex items-center gap-1">
+                <i data-lucide="check-circle" class="w-3.5 h-3.5"></i> Custom Holes
+              </span>
+              <button onclick="requestItemQuote('EX200 / PC200 Side Cutters')" class="text-xs font-bold text-amber-400 hover:text-amber-300 uppercase tracking-wider flex items-center gap-1">
+                Inquire <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 9. Weld-on Double Strap Adapters -->
+        <div class="product-card group rounded-2xl bg-slate-900/70 border border-slate-800 hover:border-amber-500/60 transition-all duration-300 overflow-hidden flex flex-col" data-category="adapters" data-search="adapters weld-on double strap cat320 j300 adapter lip">
+          <div class="h-44 bg-gradient-to-tr from-slate-950 to-slate-800 relative flex items-center justify-center p-6">
+            <div class="flex flex-col items-center">
+              <i data-lucide="cpu" class="w-16 h-16 text-amber-500/90 group-hover:scale-105 transition-transform duration-300"></i>
+              <span class="text-[11px] font-mono text-amber-400 font-bold mt-2">Part No: AD-CAT320-DS</span>
             </div>
             <span class="absolute top-3 left-3 bg-amber-500/20 text-amber-400 border border-amber-500/40 text-[10px] font-bold px-2 py-0.5 rounded uppercase">
               Weld-on Adapter
             </span>
           </div>
-          <div class="p-6 flex-1 flex flex-col justify-between">
+          <div class="p-5 flex-1 flex flex-col justify-between">
             <div>
-              <h3 class="font-heading font-bold text-lg text-white group-hover:text-amber-400 transition">CAT & Hyundai Weld-on Bucket Adapters</h3>
-              <p class="text-xs text-slate-400 mt-2">
-                High-integrity weldable cast steel adapters designed to secure tooth points under intense shear forces without lip crack risk.
+              <h3 class="font-heading font-bold text-base text-white group-hover:text-amber-400 transition">Weld-on Double Strap Adapters</h3>
+              <p class="text-xs text-slate-400 mt-1.5 leading-relaxed">
+                Cast alloy steel adapters with exceptional weldability. Securely anchors tooth points under extreme rock breakout forces.
               </p>
               <div class="mt-4 grid grid-cols-2 gap-2 text-[11px] font-mono text-slate-300 border-t border-slate-800/80 pt-3">
-                <div><span class="text-slate-500">Bevel:</span> Double Bevel Lip</div>
-                <div><span class="text-slate-500">Lip Size:</span> 30mm - 50mm</div>
-                <div><span class="text-slate-500">Pin Retainer:</span> Heavy Coil Spring Pin</div>
-                <div><span class="text-slate-500">Weldability:</span> Low Carbon Equiv.</div>
+                <div><span class="text-slate-500">Lip Size:</span> 25mm - 50mm Bevel</div>
+                <div><span class="text-slate-500">Weight:</span> 8.50 - 14.0 kg</div>
+                <div><span class="text-slate-500">Weld Spec:</span> Low Carbon Equiv.</div>
+                <div><span class="text-slate-500">Series:</span> J250 / J300 / J350</div>
               </div>
             </div>
-            <div class="mt-6 pt-4 border-t border-slate-800 flex items-center justify-between">
+            <div class="mt-5 pt-3.5 border-t border-slate-800 flex items-center justify-between">
               <span class="text-xs font-semibold text-emerald-400 flex items-center gap-1">
-                <i data-lucide="check-circle" class="w-3.5 h-3.5"></i> Custom Sizes Available
+                <i data-lucide="check-circle" class="w-3.5 h-3.5"></i> All Lip Sizes
               </span>
-              <button onclick="requestItemQuote('Weld-on Bucket Adapters')" class="text-xs font-bold text-amber-400 hover:text-amber-300 uppercase tracking-wider flex items-center gap-1">
+              <button onclick="requestItemQuote('Weld-on Double Strap Bucket Adapters')" class="text-xs font-bold text-amber-400 hover:text-amber-300 uppercase tracking-wider flex items-center gap-1">
                 Inquire <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
               </button>
             </div>
           </div>
         </div>
 
-        <!-- Product 5: Foundry Castings -->
-        <div class="product-card group rounded-2xl bg-slate-900/70 border border-slate-800 hover:border-amber-500/60 transition-all duration-300 overflow-hidden flex flex-col" data-category="castings">
-          <div class="h-48 bg-gradient-to-tr from-slate-950 to-slate-800 relative flex items-center justify-center p-6">
+        <!-- 10. Heavy Duty Lock Pins & Rubber Retainers -->
+        <div class="product-card group rounded-2xl bg-slate-900/70 border border-slate-800 hover:border-amber-500/60 transition-all duration-300 overflow-hidden flex flex-col" data-category="adapters" data-search="lock pins spiral pins retainers lock washers coil pins">
+          <div class="h-44 bg-gradient-to-tr from-slate-950 to-slate-800 relative flex items-center justify-center p-6">
             <div class="flex flex-col items-center">
-              <i data-lucide="flame" class="w-20 h-20 text-amber-500/90 group-hover:scale-110 transition-transform duration-300"></i>
-              <span class="text-[11px] font-mono text-slate-400 mt-2">Grade: IS 210 FG 220 / 260</span>
-            </div>
-            <span class="absolute top-3 left-3 bg-purple-500/20 text-purple-400 border border-purple-500/40 text-[10px] font-bold px-2 py-0.5 rounded uppercase">
-              Custom Foundry
-            </span>
-          </div>
-          <div class="p-6 flex-1 flex flex-col justify-between">
-            <div>
-              <h3 class="font-heading font-bold text-lg text-white group-hover:text-amber-400 transition">Grey Iron & SG Ductile Castings</h3>
-              <p class="text-xs text-slate-400 mt-2">
-                Custom casting solutions for industrial machinery, pump housings, automotive components, and heavy agricultural equipment.
-              </p>
-              <div class="mt-4 grid grid-cols-2 gap-2 text-[11px] font-mono text-slate-300 border-t border-slate-800/80 pt-3">
-                <div><span class="text-slate-500">Weight Range:</span> 2 kg to 450 kg</div>
-                <div><span class="text-slate-500">Foundry Standard:</span> ASTM A48 / DIN 1691</div>
-                <div><span class="text-slate-500">Pattern Shop:</span> In-house CNC Patterns</div>
-                <div><span class="text-slate-500">Machining:</span> VMC / Lathe Ready</div>
-              </div>
-            </div>
-            <div class="mt-6 pt-4 border-t border-slate-800 flex items-center justify-between">
-              <span class="text-xs font-semibold text-emerald-400 flex items-center gap-1">
-                <i data-lucide="check-circle" class="w-3.5 h-3.5"></i> Drawing/Sample Basis
-              </span>
-              <button onclick="requestItemQuote('Cast Iron / SG Iron Foundry Castings')" class="text-xs font-bold text-amber-400 hover:text-amber-300 uppercase tracking-wider flex items-center gap-1">
-                Inquire <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
-              </button>
-            </div>
-          </div>
-        </div>
-
-        <!-- Product 6: Heavy Wear Plates -->
-        <div class="product-card group rounded-2xl bg-slate-900/70 border border-slate-800 hover:border-amber-500/60 transition-all duration-300 overflow-hidden flex flex-col" data-category="castings">
-          <div class="h-48 bg-gradient-to-tr from-slate-950 to-slate-800 relative flex items-center justify-center p-6">
-            <div class="flex flex-col items-center">
-              <i data-lucide="layers" class="w-20 h-20 text-amber-500/90 group-hover:scale-105 transition-transform duration-300"></i>
-              <span class="text-[11px] font-mono text-slate-400 mt-2">Part No: KND-WP-500</span>
+              <i data-lucide="key" class="w-16 h-16 text-amber-500/90 group-hover:rotate-45 transition-transform duration-300"></i>
+              <span class="text-[11px] font-mono text-amber-400 font-bold mt-2">Part No: PIN-J300-SET</span>
             </div>
             <span class="absolute top-3 left-3 bg-amber-500/20 text-amber-400 border border-amber-500/40 text-[10px] font-bold px-2 py-0.5 rounded uppercase">
-              Mining Liners
+              Locking Hardware
             </span>
           </div>
-          <div class="p-6 flex-1 flex flex-col justify-between">
+          <div class="p-5 flex-1 flex flex-col justify-between">
             <div>
-              <h3 class="font-heading font-bold text-lg text-white group-hover:text-amber-400 transition">Choc-block & Bi-Metallic Wear Liners</h3>
-              <p class="text-xs text-slate-400 mt-2">
-                High-chromium white iron vacuum-brazed to mild steel backing plates for crusher chutes, excavator bucket heels, and hopper liners.
+              <h3 class="font-heading font-bold text-base text-white group-hover:text-amber-400 transition">Pin Locks & Rubber Retainers</h3>
+              <p class="text-xs text-slate-400 mt-1.5 leading-relaxed">
+                Forged steel lock pins with bonded oil-resistant rubber retainers. Eliminates pin back-out and on-site tooth loss.
+              </p>
+              <div class="mt-4 grid grid-cols-2 gap-2 text-[11px] font-mono text-slate-300 border-t border-slate-800/80 pt-3">
+                <div><span class="text-slate-500">Type:</span> Vertical / Horizontal</div>
+                <div><span class="text-slate-500">Steel:</span> 40Cr Heat Treated</div>
+                <div><span class="text-slate-500">Retainer:</span> Heavy Coil Rubber</div>
+                <div><span class="text-slate-500">Fit:</span> JCB, CAT, Komatsu</div>
+              </div>
+            </div>
+            <div class="mt-5 pt-3.5 border-t border-slate-800 flex items-center justify-between">
+              <span class="text-xs font-semibold text-emerald-400 flex items-center gap-1">
+                <i data-lucide="check-circle" class="w-3.5 h-3.5"></i> Ready Stock
+              </span>
+              <button onclick="requestItemQuote('Lock Pins and Rubber Retainer Sets')" class="text-xs font-bold text-amber-400 hover:text-amber-300 uppercase tracking-wider flex items-center gap-1">
+                Inquire <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 11. Custom Foundry Cast Iron & SG Ductile Castings -->
+        <div class="product-card group rounded-2xl bg-slate-900/70 border border-slate-800 hover:border-amber-500/60 transition-all duration-300 overflow-hidden flex flex-col" data-category="castings" data-search="cast iron sg ductile castings naroda gidc ahmedabad foundry is 210 fg 260">
+          <div class="h-44 bg-gradient-to-tr from-slate-950 to-slate-800 relative flex items-center justify-center p-6">
+            <div class="flex flex-col items-center">
+              <i data-lucide="flame" class="w-16 h-16 text-amber-500/90 group-hover:scale-110 transition-transform duration-300"></i>
+              <span class="text-[11px] font-mono text-amber-400 font-bold mt-2">Grade: IS 210 FG 220/260</span>
+            </div>
+            <span class="absolute top-3 left-3 bg-purple-500/20 text-purple-400 border border-purple-500/40 text-[10px] font-bold px-2 py-0.5 rounded uppercase">
+              Foundry Castings
+            </span>
+          </div>
+          <div class="p-5 flex-1 flex flex-col justify-between">
+            <div>
+              <h3 class="font-heading font-bold text-base text-white group-hover:text-amber-400 transition">Grey Iron & SG Ductile Castings</h3>
+              <p class="text-xs text-slate-400 mt-1.5 leading-relaxed">
+                Custom foundry casting components for earthmoving, pump casings, counterweights, and heavy industrial gearboxes in Naroda GIDC.
+              </p>
+              <div class="mt-4 grid grid-cols-2 gap-2 text-[11px] font-mono text-slate-300 border-t border-slate-800/80 pt-3">
+                <div><span class="text-slate-500">Weight:</span> 2 kg to 450 kg</div>
+                <div><span class="text-slate-500">Molding:</span> No-Bake Resin Sand</div>
+                <div><span class="text-slate-500">Standard:</span> ASTM A48 / DIN 1691</div>
+                <div><span class="text-slate-500">Machining:</span> CNC / VMC Ready</div>
+              </div>
+            </div>
+            <div class="mt-5 pt-3.5 border-t border-slate-800 flex items-center justify-between">
+              <span class="text-xs font-semibold text-emerald-400 flex items-center gap-1">
+                <i data-lucide="check-circle" class="w-3.5 h-3.5"></i> Drawing / Sample
+              </span>
+              <button onclick="requestItemQuote('Custom Cast Iron & SG Ductile Castings')" class="text-xs font-bold text-amber-400 hover:text-amber-300 uppercase tracking-wider flex items-center gap-1">
+                Inquire <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 12. Chocky Bars & Bi-Metallic Wear Liners -->
+        <div class="product-card group rounded-2xl bg-slate-900/70 border border-slate-800 hover:border-amber-500/60 transition-all duration-300 overflow-hidden flex flex-col" data-category="castings" data-search="chocky bars bi-metallic wear liners wear buttons mining crusher plates">
+          <div class="h-44 bg-gradient-to-tr from-slate-950 to-slate-800 relative flex items-center justify-center p-6">
+            <div class="flex flex-col items-center">
+              <i data-lucide="layers" class="w-16 h-16 text-amber-500/90 group-hover:scale-105 transition-transform duration-300"></i>
+              <span class="text-[11px] font-mono text-amber-400 font-bold mt-2">Part No: CB-500-WEAR</span>
+            </div>
+            <span class="absolute top-3 left-3 bg-amber-500/20 text-amber-400 border border-amber-500/40 text-[10px] font-bold px-2 py-0.5 rounded uppercase">
+              63 HRC Wear Liners
+            </span>
+          </div>
+          <div class="p-5 flex-1 flex flex-col justify-between">
+            <div>
+              <h3 class="font-heading font-bold text-base text-white group-hover:text-amber-400 transition">Chocky Bars & Bi-Metallic Liners</h3>
+              <p class="text-xs text-slate-400 mt-1.5 leading-relaxed">
+                High-chromium white iron vacuum-brazed to mild steel weldable backing. Protects excavator bucket heels, chutes, and hoppers.
               </p>
               <div class="mt-4 grid grid-cols-2 gap-2 text-[11px] font-mono text-slate-300 border-t border-slate-800/80 pt-3">
                 <div><span class="text-slate-500">Hardness:</span> 63 HRC (700 BHN)</div>
                 <div><span class="text-slate-500">Backing:</span> Weldable Q235 Steel</div>
-                <div><span class="text-slate-500">Shapes:</span> Buttons, Bars, Chock</div>
-                <div><span class="text-slate-500">Application:</span> Quarry / Cement</div>
+                <div><span class="text-slate-500">Shapes:</span> Chocks, Buttons, Bars</div>
+                <div><span class="text-slate-500">Use:</span> Quarry / Mining Crushing</div>
               </div>
             </div>
-            <div class="mt-6 pt-4 border-t border-slate-800 flex items-center justify-between">
+            <div class="mt-5 pt-3.5 border-t border-slate-800 flex items-center justify-between">
               <span class="text-xs font-semibold text-emerald-400 flex items-center gap-1">
-                <i data-lucide="check-circle" class="w-3.5 h-3.5"></i> Custom Fabrication
+                <i data-lucide="check-circle" class="w-3.5 h-3.5"></i> Custom Cutting
               </span>
-              <button onclick="requestItemQuote('Bi-Metallic Wear Liners')" class="text-xs font-bold text-amber-400 hover:text-amber-300 uppercase tracking-wider flex items-center gap-1">
+              <button onclick="requestItemQuote('Bi-Metallic Chocky Bars & Wear Liners')" class="text-xs font-bold text-amber-400 hover:text-amber-300 uppercase tracking-wider flex items-center gap-1">
                 Inquire <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
               </button>
             </div>
@@ -592,6 +796,12 @@
         </div>
 
       </div>
+
+      <!-- No Results Notice -->
+      <div id="noProductsFoundNotice" class="hidden py-12 text-center text-slate-400">
+        <p class="text-sm">No spare parts matching your search query. Try typing: <strong>3DX, 1U3302, PC200, EX200, Adapter, Pin</strong> or contact our engineering desk directly.</p>
+      </div>
+
     </div>
   </section>
 
@@ -660,11 +870,11 @@
           <div class="mt-6 pt-4 border-t border-slate-800/80 grid grid-cols-2 sm:grid-cols-4 gap-3 text-center">
             <div class="p-2.5 bg-slate-950/60 rounded-lg border border-slate-800">
               <div class="text-slate-400 text-[10px] uppercase">Yield Strength</div>
-              <div class="text-sm font-bold text-white font-mono">â‰¥ 1250 MPa</div>
+              <div class="text-sm font-bold text-white font-mono">≥ 1250 MPa</div>
             </div>
             <div class="p-2.5 bg-slate-950/60 rounded-lg border border-slate-800">
               <div class="text-slate-400 text-[10px] uppercase">Elongation</div>
-              <div class="text-sm font-bold text-white font-mono">â‰¥ 5.5%</div>
+              <div class="text-sm font-bold text-white font-mono">≥ 5.5%</div>
             </div>
             <div class="p-2.5 bg-slate-950/60 rounded-lg border border-slate-800">
               <div class="text-slate-400 text-[10px] uppercase">Hardness HRC</div>
@@ -672,7 +882,7 @@
             </div>
             <div class="p-2.5 bg-slate-950/60 rounded-lg border border-slate-800">
               <div class="text-slate-400 text-[10px] uppercase">Charpy V-Notch</div>
-              <div class="text-sm font-bold text-emerald-400 font-mono">â‰¥ 28 J</div>
+              <div class="text-sm font-bold text-emerald-400 font-mono">≥ 28 J</div>
             </div>
           </div>
         </div>
@@ -934,7 +1144,7 @@
               </button>
 
               <div id="formSuccessMessage" class="hidden p-3 rounded-lg bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 text-xs text-center">
-                âœ“ Thank you! Your RFQ has been logged. Our engineering desk in Naroda, Ahmedabad will contact you shortly with commercial terms.
+                ✓ Thank you! Your RFQ has been logged. Our engineering desk in Naroda, Ahmedabad will contact you shortly with commercial terms.
               </div>
             </form>
           </div>
@@ -991,7 +1201,7 @@
 
       <div class="pt-8 border-t border-slate-800/80 flex flex-col sm:flex-row items-center justify-between text-[11px] text-slate-400">
         <div>
-          Â© 2026 Gravix Equipment Solutions LLP. All rights reserved.
+          © 2026 Gravix Equipment Solutions LLP. All rights reserved.
         </div>
         <div class="flex items-center gap-4 mt-3 sm:mt-0">
           <span>OEM names and part numbers are used for reference purposes only.</span>
@@ -1025,6 +1235,12 @@
       </div>
     </div>
   </div>
+
+  <!-- Floating WhatsApp Quick Quote Button -->
+  <a href="https://wa.me/919876543210?text=Hello%20Gravix%20Equipment%20Solutions,%20I%20am%20interested%20in%20tooth%20point%20and%20casting%20spares" target="_blank" rel="noopener noreferrer" class="fixed bottom-6 right-6 z-50 p-3.5 rounded-full bg-emerald-500 hover:bg-emerald-400 text-white shadow-2xl whatsapp-floating flex items-center gap-2 group transition" title="WhatsApp Fast Inquiry">
+    <i data-lucide="message-circle" class="w-6 h-6"></i>
+    <span class="max-w-0 overflow-hidden whitespace-nowrap group-hover:max-w-xs transition-all duration-300 text-xs font-bold uppercase tracking-wider pr-1">Fast Quote</span>
+  </a>
 
   <script src="app.js"></script>
 </body>
