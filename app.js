@@ -118,6 +118,18 @@ async function handleFormSubmit(e) {
   const messageVal = document.getElementById("rfqMessage")?.value || '';
   const rfqId = 'RFQ-' + Date.now().toString(36).toUpperCase();
 
+  // Anti-Spam Honeypot Bot Trap:
+  const honeyVal = document.getElementById("rfqHoney")?.value;
+  if (honeyVal) {
+    console.warn("Spam bot activity detected via honeypot field. Dropping silently.");
+    if (successBox) {
+      successBox.innerHTML = `✓ Thank you! Your RFQ has been received.`;
+      successBox.classList.remove("hidden");
+    }
+    form.reset();
+    return;
+  }
+
   const payload = {
     id: rfqId,
     name: nameVal,
@@ -155,7 +167,8 @@ async function handleFormSubmit(e) {
         'Product Required': categoryVal,
         'Machine Model & Message': messageVal || 'Standard Quotation Request',
         '_subject': `🚨 New Lead: ${nameVal} - ${categoryVal} (${companyVal})`,
-        '_template': 'table'
+        '_template': 'table',
+        '_honey': ''
       })
     }).catch(err => console.warn('Email dispatch notice:', err));
   } catch (err) {}
