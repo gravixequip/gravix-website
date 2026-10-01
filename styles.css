@@ -1,49 +1,109 @@
-/* Custom styles for IndoCraft Foundry Industrial Modern Website */
+/* Gravix Equipment Solutions - Ultra Premium 60/120Hz Animation System */
 
 @layer utilities {
   .text-glow {
-    text-shadow: 0 0 20px rgba(245, 158, 11, 0.4);
+    text-shadow: 0 0 25px rgba(245, 158, 11, 0.6);
   }
+  .box-glow {
+    box-shadow: 0 0 35px -5px rgba(245, 158, 11, 0.35);
+  }
+}
+
+/* Smooth Hardware-Accelerated Scrolling */
+html {
+  scroll-behavior: smooth;
 }
 
 /* Custom Scrollbar */
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 9px;
+  height: 9px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #070a11;
+  background: #060911;
 }
 
 ::-webkit-scrollbar-thumb {
   background: #1e293b;
-  border-radius: 4px;
+  border-radius: 5px;
+  border: 2px solid #060911;
 }
 
 ::-webkit-scrollbar-thumb:hover {
   background: #f59e0b;
 }
 
-/* Filter Tab Active States */
-.filter-btn.active {
-  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
-  color: #000;
-  font-weight: 700;
-  box-shadow: 0 4px 14px 0 rgba(245, 158, 11, 0.3);
+/* High-Refresh Keyframe Animations */
+@keyframes floatSlow {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-8px) rotate(0.5deg);
+  }
 }
 
-/* Card Hover Animation */
+@keyframes pulseGlow {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(245, 158, 11, 0.25);
+  }
+  50% {
+    box-shadow: 0 0 45px rgba(245, 158, 11, 0.55);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.animate-float {
+  animation: floatSlow 5s ease-in-out infinite;
+}
+
+.animate-pulseGlow {
+  animation: pulseGlow 3s ease-in-out infinite;
+}
+
+/* 3D High-Refresh Card Hover */
 .product-card {
-  transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), 
+              border-color 0.3s ease, 
+              box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform, box-shadow;
+  backface-visibility: hidden;
 }
 
 .product-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 12px 30px -10px rgba(245, 158, 11, 0.15);
+  transform: translateY(-6px) scale(1.015);
+  box-shadow: 0 20px 40px -15px rgba(245, 158, 11, 0.22),
+              0 0 1px 1px rgba(245, 158, 11, 0.4);
 }
 
-/* Smooth Scrolling */
-html {
-  scroll-behavior: smooth;
+/* Filter Tab Active States */
+.filter-btn {
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.filter-btn.active {
+  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+  color: #000 !important;
+  font-weight: 800;
+  box-shadow: 0 6px 20px rgba(245, 158, 11, 0.4);
+  transform: translateY(-1px);
+}
+
+/* Floating WhatsApp Pulse Button */
+.whatsapp-floating {
+  animation: pulseGlow 2.5s infinite;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.whatsapp-floating:hover {
+  transform: scale(1.1) translateY(-3px);
 }
