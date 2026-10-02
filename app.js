@@ -273,3 +273,27 @@ function toggleTechSpecs() {
     }
   }
 }
+
+// Accessible navigation and a lightweight reading indicator.
+document.addEventListener('DOMContentLoaded', () => {
+  const menuButton = document.getElementById('mobileMenuBtn');
+  const menu = document.getElementById('mobileMenu');
+  menuButton?.addEventListener('click', () => {
+    menuButton.setAttribute('aria-expanded', String(!menu.classList.contains('hidden')));
+  });
+  menu?.querySelectorAll('a').forEach(link => link.addEventListener('click', () => {
+    menu.classList.add('hidden');
+    menuButton?.setAttribute('aria-expanded', 'false');
+  }));
+  const progress = document.getElementById('readingProgress');
+  let scheduled = false;
+  const updateProgress = () => {
+    const distance = document.documentElement.scrollHeight - window.innerHeight;
+    if (progress) progress.style.width = `${distance > 0 ? Math.min(100, window.scrollY / distance * 100) : 0}%`;
+    scheduled = false;
+  };
+  window.addEventListener('scroll', () => {
+    if (!scheduled) { scheduled = true; window.requestAnimationFrame(updateProgress); }
+  }, { passive: true });
+  updateProgress();
+});
