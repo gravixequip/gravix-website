@@ -208,3 +208,26 @@ body.premium-site{background:var(--ink);color:#edf0ec}
 .editorial-link{color:#f4bf32;border-color:#b78f31}
 .skip-link{background:#f4bf32}
 .faq-items summary{font-size:1rem}.order-grid p,.faq-items details p{font-size:1rem}
+
+/* Finishing fixes: keep the existing charcoal and amber visual system. */
+html { color-scheme: dark; }
+#contact { scroll-margin-top: 105px; }
+#catalogModal { width:100%; height:100dvh; max-width:none; max-height:none; margin:0; border:0; color:#edf0ec; }
+#catalogModal::backdrop { background:rgba(0,0,0,.65); }
+#catalogModal > div { max-height:calc(100dvh - 32px); overflow-y:auto; }
+#catalogModal input { min-height:44px; font-size:16px; }
+#catalogModal button[aria-label] { min-width:44px; min-height:44px; display:grid; place-items:center; }
+button:disabled { cursor:wait; opacity:.65; }
+.premium-site #quote input,.premium-site #quote select,.premium-site #quote textarea { font-size:16px; }
+#noProductsFoundNotice { color:#bcc4c2; }
+@media(max-width:640px) {
+  .premium-hero h1 { font-size:clamp(38px,10.8vw,49px)!important; }
+  .hero-stats>div { border-right:0; padding:8px 0; }
+  #quote .p-4.flex.items-center.justify-between { gap:16px; flex-wrap:wrap; }
+  .premium-site footer { padding-bottom:90px; }
+  .premium-site header nav a,.premium-site header nav button { min-height:44px; }
+}
+
+.premium-site footer p { overflow-wrap:anywhere; }
+.premium-site .grid > * { min-width:0; }
+.whatsapp-floating > span { padding-right:0; }
