@@ -1,14 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<meta name="robots" content="noindex,nofollow"/>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Gravix Equipment | Admin Leads & RFQ Portal</title>
-  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="assets/tailwind.css"/>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="assets/lucide.js" defer></script>
   <style>
     body { font-family: 'Inter', sans-serif; background-color: #060911; color: #f1f5f9; }
     .font-heading { font-family: 'Chakra Petch', sans-serif; }
@@ -19,6 +20,7 @@
   </style>
 </head>
 <body class="min-h-screen flex flex-col antialiased">
+<aside style="padding:16px;background:#302511;color:#ffe1a1;text-align:center;font:14px/1.6 sans-serif">Local browser lead notebook only. This PIN is not secure authentication. Data does not sync between devices; website inquiries are delivered by email. Export a backup before clearing browser data.</aside>
 
   <!-- ================= PIN LOCKSCREEN ================= -->
   <div id="loginScreen" class="fixed inset-0 z-50 bg-[#060911] flex items-center justify-center p-4">
@@ -431,7 +433,7 @@
             </p>
           </td>
           <td class="py-4 px-5">
-            <select onchange="updateLeadStatus('${lead.id}', this.value)" class="text-[11px] font-bold uppercase rounded-lg px-2.5 py-1 bg-slate-950 border border-slate-700 ${getStatusClass(lead.status)} focus:outline-none">
+            <select data-lead-status="${escapeHtml(lead.id)}" class="text-[11px] font-bold uppercase rounded-lg px-2.5 py-1 bg-slate-950 border border-slate-700 ${getStatusClass(lead.status)} focus:outline-none">
               <option value="NEW" ${lead.status === 'NEW' ? 'selected' : ''}>NEW</option>
               <option value="CONTACTED" ${lead.status === 'CONTACTED' ? 'selected' : ''}>CONTACTED</option>
               <option value="CLOSED" ${lead.status === 'CLOSED' ? 'selected' : ''}>CLOSED</option>
@@ -443,11 +445,13 @@
                 <i data-lucide="message-circle" class="w-3.5 h-3.5"></i>
               </a>
             ` : ''}
-            <button onclick="deleteLead('${lead.id}')" class="p-2 rounded-lg bg-slate-800 hover:bg-rose-500/20 text-slate-400 hover:text-rose-400 border border-slate-700 hover:border-rose-500/30 inline-flex items-center transition" title="Remove Lead">
+            <button data-delete-lead="${escapeHtml(lead.id)}" class="p-2 rounded-lg bg-slate-800 hover:bg-rose-500/20 text-slate-400 hover:text-rose-400 border border-slate-700 hover:border-rose-500/30 inline-flex items-center transition" title="Remove Lead">
               <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
             </button>
           </td>
         `;
+        tr.querySelector('[data-lead-status]').addEventListener('change', e => updateLeadStatus(lead.id, e.target.value));
+        tr.querySelector('[data-delete-lead]').addEventListener('click', () => deleteLead(lead.id));
         tbody.appendChild(tr);
       });
 
@@ -574,7 +578,7 @@
       }
       let csv = 'Inquiry ID,Customer Name,Company,Phone,Category,Message / Machine Details,Date,Status,Source\n';
       allLeads.forEach(r => {
-        csv += `"${r.id}","${r.name}","${r.company}","${r.phone}","${r.category}","${(r.message || '').replace(/"/g, '""')}","${r.date}","${r.status}","${r.source || 'Website'}"\n`;
+        csv += [r.id, r.name, r.company, r.phone, r.category, r.message, r.date, r.status, r.source || 'Website'].map(value => { let text = String(value || ''); if (/^[\s]*[=+@-]/.test(text)) text = "'" + text; return '"' + text.replace(/"/g, '""') + '"'; }).join(',') + '\n';
       });
 
       const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
@@ -583,6 +587,7 @@
       a.href = url;
       a.download = `Gravix_Customer_Leads_${new Date().toISOString().slice(0, 10)}.csv`;
       a.click();
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
     }
 
     function escapeHtml(str) {
