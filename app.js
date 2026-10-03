@@ -135,6 +135,20 @@ async function handleFormSubmit(e) {
     submitBtn.innerHTML = '<span class="animate-pulse">Sending Quote Request...</span>';
   }
 
+  // Always log lead into admin dashboard database (localStorage)
+  const newLead = {
+    id: rfqId,
+    name: nameVal,
+    company: companyVal,
+    phone: phoneVal,
+    category: categoryVal,
+    message: messageVal || 'Standard Quotation Request',
+    date: new Date().toISOString(),
+    status: 'NEW',
+    source: 'Website RFQ Form'
+  };
+  saveLeadToAdmin(newLead);
+
   try {
     const response = await fetch('https://formsubmit.co/ajax/gravixequip@gmail.com', {
       method: 'POST',
@@ -184,6 +198,21 @@ function escapeForMessage(value) {
   }[char]));
 }
 
+// Save lead into localStorage for Admin Dashboard
+function saveLeadToAdmin(lead) {
+  try {
+    const key = 'gravix_admin_leads';
+    const existing = JSON.parse(localStorage.getItem(key) || '[]');
+    // Avoid duplicates
+    if (!existing.some(item => item.id === lead.id)) {
+      existing.unshift(lead);
+      localStorage.setItem(key, JSON.stringify(existing));
+    }
+  } catch (err) {
+    console.warn('LocalStorage save failed:', err);
+  }
+}
+
 // Catalogue Modal
 function openCatalogModal() {
   const modal = document.getElementById("catalogModal");
@@ -213,8 +242,18 @@ async function handleCatalogueDownload(e) {
 
   if (submitBtn) {
     submitBtn.disabled = true;
-    submitBtn.textContent = 'Sending Request...';
-  }
+  const catLead = {
+    id: 'CAT-' + Date.now().toString(36).toUpperCase(),
+    name: name,
+    company: 'Catalogue Request',
+    phone: email,
+    category: 'Product Catalogue PDF',
+    message: `Customer requested technical PDF catalogue: ${email}`,
+    date: new Date().toISOString(),
+    status: 'NEW',
+    source: 'Website Catalogue Modal'
+  };
+  saveLeadToAdmin(catLead);
 
   try {
     const response = await fetch('https://formsubmit.co/ajax/gravixequip@gmail.com', {
