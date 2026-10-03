@@ -3,6 +3,8 @@
 <html lang="en">
 <head>
 <meta charset="utf-8"/>
+<meta name="theme-color" content="#101719"/>
+<link rel="preload" as="image" href="hero-bucket.jpg"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <!-- Google Search Console Verification -->
 <meta content="tAG2QOYm7pRHrqLP77CPGdMltmRnanBZZlkLhblTyuI" name="google-site-verification"/>
@@ -74,25 +76,14 @@
   }
   </script>
 <!-- Tailwind CSS & Google Fonts -->
-<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="assets/tailwind.css"/>
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
 <link href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
 <!-- Lucide Icons -->
-<script src="https://unpkg.com/lucide@latest"></script>
+<script src="assets/lucide.js" defer></script>
 <link href="styles.css" rel="stylesheet"/>
-<script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          fontFamily: {
-            heading: ['"Inter"', 'sans-serif'],
-            sans: ['"Inter"', 'sans-serif']
-          }
-        }
-      }
-    }
-  </script>
+
 </head>
 <body class="bg-[#070b14] text-slate-100 font-sans antialiased selection:bg-amber-500 selection:text-black premium-site"><a class="skip-link" href="#products">Skip to products</a><div aria-hidden="true" id="readingProgress"></div>
 <!-- Top Announcement Bar -->
@@ -130,7 +121,7 @@
 <nav class="h-20 flex items-center justify-between">
 <!-- Logo -->
 <a class="flex items-center gap-3 brand-lockup" href="#">
-<img alt="GRAVIX EQUIPMENT SOLUTIONS LLP" class="h-12 sm:h-14 w-auto object-contain rounded-lg shadow-md" loading="lazy" src="logo.jpg"/>
+<img alt="GRAVIX EQUIPMENT SOLUTIONS LLP" class="h-12 sm:h-14 w-auto object-contain rounded-lg shadow-md" width="160" height="160" src="logo.jpg"/>
 <span class="brand-wordmark">GRAVIX<small>EQUIPMENT SOLUTIONS LLP</small></span></a>
 <!-- Desktop Navigation Links -->
 <div class="hidden lg:flex items-center gap-8 text-sm font-semibold text-slate-300">
@@ -168,6 +159,7 @@
 </div>
 </div>
 </header>
+<main id="main-content">
 <!-- Clean, High-Impact Hero Section -->
 <section class="relative overflow-hidden py-16 lg:py-24 bg-gradient-to-b from-[#070b14] via-[#0d1424] to-[#080d19] premium-hero" id="home">
 <div class="absolute inset-0 opacity-15 bg-[radial-gradient(#f59e0b_1px,transparent_1px)] [background-size:24px_24px] pointer-events-none"></div>
@@ -696,7 +688,7 @@
 </div>
 </div>
 <!-- No Results Notice -->
-<div class="hidden py-12 text-center text-slate-400" id="noProductsFoundNotice">
+<div class="hidden py-12 text-center text-slate-400" id="noProductsFoundNotice" role="status" aria-live="polite">
 <p class="text-sm">No spare parts matching your search query. Try typing: <strong>3DX, 1U3302, PC200, EX200, Adapter, Pin</strong> or contact our engineering desk.</p>
 </div>
 </div>
@@ -758,7 +750,7 @@
 </div>
 <!-- Collapsible Detailed Chemical Spec Sheet -->
 <div class="mt-8 text-center">
-<button class="px-4 py-2 rounded-lg bg-slate-900 border border-slate-700 text-xs font-semibold text-slate-300 hover:text-white hover:border-amber-500/50 transition inline-flex items-center gap-2" id="toggleTechBtn" onclick="toggleTechSpecs()">
+<button class="px-4 py-2 rounded-lg bg-slate-900 border border-slate-700 text-xs font-semibold text-slate-300 hover:text-white hover:border-amber-500/50 transition inline-flex items-center gap-2" id="toggleTechBtn" aria-controls="techSpecsDetail" aria-expanded="false" onclick="toggleTechSpecs()">
 <i class="w-3.5 h-3.5 text-amber-500" data-lucide="sliders"></i> View Spectro Chemical Composition
         </button>
 <div class="hidden mt-6 bg-slate-900/90 rounded-2xl border border-slate-800 p-5 text-left max-w-4xl mx-auto overflow-x-auto" id="techSpecsDetail">
@@ -1037,27 +1029,28 @@
 <h3 class="font-heading font-bold text-lg sm:text-xl uppercase text-white mb-4">
               Get Factory Direct Quote (RFQ)
             </h3>
+<noscript><p>Please call +91 97243 50510 or email gravixequip@gmail.com to request a quote. Online forms require JavaScript.</p></noscript>
 <form class="space-y-3.5" id="rfqForm" onsubmit="handleFormSubmit(event)">
 <!-- Honeypot Anti-Spam protection field (invisible to humans, traps spam bots) -->
 <input autocomplete="off" id="rfqHoney" name="_honey" style="display:none !important;" tabindex="-1" type="text"/>
 <div class="grid sm:grid-cols-2 gap-3">
 <div>
 <label class="block text-xs font-medium text-slate-300 mb-1" for="rfqName">Your Name *</label>
-<input autocomplete="name" class="w-full px-3.5 py-2.5 rounded-lg bg-slate-950 border border-slate-700 text-white text-xs focus:outline-none focus:border-amber-500" id="rfqName" placeholder="e.g. Rahul Sharma" required="" type="text"/>
+<input autocomplete="name" class="w-full px-3.5 py-2.5 rounded-lg bg-slate-950 border border-slate-700 text-white text-xs focus:outline-none focus:border-amber-500" id="rfqName" name="rfqName" placeholder="e.g. Rahul Sharma" required="" type="text"/>
 </div>
 <div>
 <label class="block text-xs font-medium text-slate-300 mb-1" for="rfqCompany">Company / Organization *</label>
-<input autocomplete="organization" class="w-full px-3.5 py-2.5 rounded-lg bg-slate-950 border border-slate-700 text-white text-xs focus:outline-none focus:border-amber-500" id="rfqCompany" placeholder="e.g. Infra Works Ltd." required="" type="text"/>
+<input autocomplete="organization" class="w-full px-3.5 py-2.5 rounded-lg bg-slate-950 border border-slate-700 text-white text-xs focus:outline-none focus:border-amber-500" id="rfqCompany" name="rfqCompany" placeholder="e.g. Infra Works Ltd." required="" type="text"/>
 </div>
 </div>
 <div class="grid sm:grid-cols-2 gap-3">
 <div>
 <label class="block text-xs font-medium text-slate-300 mb-1" for="rfqPhone">Phone / WhatsApp *</label>
-<input autocomplete="tel" class="w-full px-3.5 py-2.5 rounded-lg bg-slate-950 border border-slate-700 text-white text-xs focus:outline-none focus:border-amber-500" id="rfqPhone" placeholder="+91 97243 XXXXX" required="" type="tel"/>
+<input autocomplete="tel" class="w-full px-3.5 py-2.5 rounded-lg bg-slate-950 border border-slate-700 text-white text-xs focus:outline-none focus:border-amber-500" id="rfqPhone" name="rfqPhone" placeholder="+91 97243 XXXXX" required="" type="tel"/>
 </div>
 <div>
 <label class="block text-xs font-medium text-slate-300 mb-1" for="rfqCategorySelect">Product Category</label>
-<select class="w-full px-3.5 py-2.5 rounded-lg bg-slate-950 border border-slate-700 text-white text-xs focus:outline-none focus:border-amber-500" id="rfqCategorySelect">
+<select class="w-full px-3.5 py-2.5 rounded-lg bg-slate-950 border border-slate-700 text-white text-xs focus:outline-none focus:border-amber-500" id="rfqCategorySelect" name="rfqCategorySelect">
 <option value="Tooth Points">Tooth Points (JCB / CAT / Komatsu)</option>
 <option value="Side Cutters">Side Cutters &amp; Corner Protectors</option>
 <option value="Adapters &amp; Pins">Adapters &amp; Lock Retainer Pins</option>
@@ -1068,7 +1061,7 @@
 </div>
 <div>
 <label class="block text-xs font-medium text-slate-300 mb-1" for="rfqMessage">Part Numbers or Machine Model</label>
-<textarea class="w-full px-3.5 py-2 rounded-lg bg-slate-950 border border-slate-700 text-white text-xs focus:outline-none focus:border-amber-500" id="rfqMessage" placeholder="Specify machine model (e.g. JCB 3DX, CAT 320D, EX200) or quantities needed..." rows="3"></textarea>
+<textarea class="w-full px-3.5 py-2 rounded-lg bg-slate-950 border border-slate-700 text-white text-xs focus:outline-none focus:border-amber-500" id="rfqMessage" name="rfqMessage" placeholder="Specify machine model (e.g. JCB 3DX, CAT 320D, EX200) or quantities needed..." rows="3"></textarea>
 </div>
 <button class="w-full py-3.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-black font-extrabold uppercase tracking-wider text-xs transition duration-200 flex items-center justify-center gap-2 shadow-lg shadow-amber-500/20" type="submit">
 <i class="w-4 h-4" data-lucide="send"></i> Submit Quote Request
@@ -1082,6 +1075,7 @@
 </div>
 </div>
 </section>
+</main>
 <!-- Clean Minimalist Footer -->
 <footer class="border-t border-slate-800 bg-[#04060c] py-10 text-slate-400 text-xs">
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -1130,30 +1124,30 @@
 </div>
 </footer>
 <!-- Modal: Catalogue Download -->
-<div class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden items-center justify-center p-4" id="catalogModal">
+<dialog class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden items-center justify-center p-4" id="catalogModal" aria-labelledby="catalogTitle">
 <div class="bg-slate-900 border border-slate-700 rounded-2xl max-w-md w-full p-6 relative">
-<button class="absolute top-4 right-4 text-slate-400 hover:text-white" onclick="closeCatalogModal()">
+<button class="absolute top-4 right-4 text-slate-400 hover:text-white" onclick="closeCatalogModal()" aria-label="Close catalogue request" type="button">
 <i class="w-5 h-5" data-lucide="x"></i>
 </button>
 <div class="w-12 h-12 rounded-xl bg-amber-500/10 border border-amber-500/30 text-amber-400 flex items-center justify-center mb-4">
 <i class="w-6 h-6" data-lucide="book-open"></i>
 </div>
-<h3 class="font-heading font-bold text-lg uppercase text-white">Request the product catalogue</h3>
+<h3 id="catalogTitle" class="font-heading font-bold text-lg uppercase text-white">Request the product catalogue</h3>
 <p class="text-xs text-slate-400 mt-1 mb-4">
         Enter your email to receive our comprehensive G.E.T. Tooth Point Dimension &amp; Part Number Specification sheet.
       </p>
 <form class="space-y-3" onsubmit="handleCatalogueDownload(event)">
-<input class="w-full px-3 py-2 rounded bg-slate-950 border border-slate-700 text-xs text-white" placeholder="Your Name" required="" type="text"/>
-<input class="w-full px-3 py-2 rounded bg-slate-950 border border-slate-700 text-xs text-white" placeholder="Work Email Address" required="" type="email"/>
+<input class="w-full px-3 py-2 rounded bg-slate-950 border border-slate-700 text-xs text-white" id="catalogName" name="name" aria-label="Your name" autocomplete="name" placeholder="Your Name" required="" type="text"/>
+<input class="w-full px-3 py-2 rounded bg-slate-950 border border-slate-700 text-xs text-white" id="catalogEmail" name="email" aria-label="Work email address" autocomplete="email" placeholder="Work Email Address" required="" type="email"/>
 <button class="w-full py-2.5 rounded bg-amber-500 hover:bg-amber-400 text-black font-bold uppercase tracking-wider text-xs" type="submit">
           Request PDF Specification
         </button>
 </form>
-<div class="hidden mt-3 p-2 bg-emerald-500/20 text-emerald-300 text-xs text-center rounded" id="catalogDownloadNotice">
+<div class="hidden mt-3 p-2 bg-emerald-500/20 text-emerald-300 text-xs text-center rounded" id="catalogDownloadNotice" role="status" aria-live="polite">
         Catalogue request sent. Our team will email the PDF to you.
       </div>
 </div>
-</div>
+</dialog>
 <!-- Floating WhatsApp Quick Quote Button -->
 <a class="fixed bottom-6 right-6 z-50 p-3.5 rounded-full bg-emerald-500 hover:bg-emerald-400 text-white shadow-2xl whatsapp-floating flex items-center gap-2 group transition" href="https://wa.me/919724350510?text=Hello%20Gravix%20Equipment%20Solutions,%20I%20am%20interested%20in%20tooth%20point%20and%20casting%20spares" rel="noopener noreferrer" target="_blank" title="WhatsApp Fast Inquiry">
 <i class="w-6 h-6" data-lucide="message-circle"></i>
@@ -1162,3 +1156,4 @@
 <script src="app.js"></script>
 </body>
 </html>
+
