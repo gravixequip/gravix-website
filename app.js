@@ -1,4 +1,15 @@
 // Initialize Lucide icons
+async function sendInquiry(options) {
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 20000);
+  try {
+    const response = await fetch('https://formsubmit.co/ajax/gravixequip@gmail.com', { ...options, signal: controller.signal });
+    const result = await response.json();
+    if (!response.ok || ![true, 'true'].includes(result.success)) throw new Error('Form service did not accept the request');
+    return result;
+  } finally { clearTimeout(timeout); }
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   if (window.lucide) {
     window.lucide.createIcons();
@@ -13,6 +24,25 @@ document.addEventListener("DOMContentLoaded", () => {
       mobileMenu.classList.toggle("hidden");
     });
   }
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.dataset.category = btn.getAttribute('onclick').match(/'([^']+)'/)[1];
+    btn.setAttribute('aria-pressed', String(btn.classList.contains('active')));
+  });
+  document.querySelectorAll('.product-card button').forEach(btn => {
+    const item = btn.getAttribute('onclick').match(/'([^']+)'/)[1];
+    btn.removeAttribute('onclick');
+    btn.addEventListener('click', () => requestItemQuote(item, btn.closest('.product-card').dataset.category));
+  });
+  const modal = document.getElementById('catalogModal');
+  modal?.addEventListener('cancel', event => { event.preventDefault(); closeCatalogModal(); });
+  modal?.addEventListener('click', event => { if (event.target === modal) closeCatalogModal(); });
+  document.addEventListener('keydown', event => {
+    if (event.key === 'Escape' && !mobileMenu?.classList.contains('hidden')) {
+      mobileMenu.classList.add('hidden');
+      mobileMenuBtn.setAttribute('aria-expanded', 'false');
+      mobileMenuBtn.focus();
+    }
+  });
 });
 
 // Product Filtering
@@ -28,9 +58,11 @@ function filterProducts(category) {
     btn.classList.remove("active");
   });
 
-  if (window.event && window.event.currentTarget) {
-    window.event.currentTarget.classList.add("active");
-  }
+  buttons.forEach(btn => {
+    const active = btn.dataset.category === category;
+    btn.classList.toggle('active', active);
+    btn.setAttribute('aria-pressed', String(active));
+  });
 
   let visibleCount = 0;
   // Filter Cards
@@ -63,8 +95,9 @@ function liveSearchProducts() {
   // Clear active tab filter if typing a search
   if (query) {
     const buttons = document.querySelectorAll(".filter-btn");
-    buttons.forEach((btn) => btn.classList.remove("active"));
+    buttons.forEach((btn) => { btn.classList.remove("active"); btn.setAttribute('aria-pressed', 'false'); });
   }
+  if (!query) { filterProducts('all'); return; }
 
   cards.forEach((card) => {
     const searchData = (card.getAttribute("data-search") || "").toLowerCase();
@@ -90,7 +123,7 @@ function liveSearchProducts() {
 }
 
 // Quick Inquire from Product card -> scroll & pre-fill RFQ
-function requestItemQuote(itemName) {
+function requestItemQuote(itemName, category) {
   const rfqSection = document.getElementById("quote");
   const messageBox = document.getElementById("rfqMessage");
 
@@ -100,8 +133,10 @@ function requestItemQuote(itemName) {
 
   if (messageBox) {
     messageBox.value = `I would like to request factory pricing & availability for: ${itemName}.\nQuantity needed: \nDelivery Location: `;
-    messageBox.focus();
+    messageBox.focus({ preventScroll: true });
   }
+  const categories = { 'tooth-points': 'Tooth Points', 'side-cutters': 'Side Cutters', adapters: 'Adapters & Pins', castings: 'Cast Iron Castings' };
+  if (categories[category]) document.getElementById('rfqCategorySelect').value = categories[category];
 }
 
 // RFQ Form Submission for GitHub Pages (static hosting)
@@ -109,6 +144,8 @@ function requestItemQuote(itemName) {
 async function handleFormSubmit(e) {
   e.preventDefault();
   const form = e.target;
+  if (form.dataset.sending || !form.reportValidity()) return;
+  form.dataset.sending = 'true';
   const submitBtn = form.querySelector('button[type="submit"]');
   const successBox = document.getElementById("formSuccessMessage");
 
@@ -126,6 +163,7 @@ async function handleFormSubmit(e) {
       successBox.classList.remove("hidden");
     }
     form.reset();
+    delete form.dataset.sending;
     return;
   }
 
@@ -147,10 +185,9 @@ async function handleFormSubmit(e) {
     status: 'NEW',
     source: 'Website RFQ Form'
   };
-  saveLeadToAdmin(newLead);
 
   try {
-    const response = await fetch('https://formsubmit.co/ajax/gravixequip@gmail.com', {
+    await sendInquiry({
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -170,7 +207,7 @@ async function handleFormSubmit(e) {
       })
     });
 
-    if (!response.ok) throw new Error(`Form service returned ${response.status}`);
+    saveLeadToAdmin(newLead);
 
     if (successBox) {
       successBox.innerHTML = `✓ Thank you <strong>${escapeForMessage(nameVal)}</strong>! Your RFQ <strong>#${rfqId}</strong> has been sent to our team. We will contact you on WhatsApp/Phone shortly.`;
@@ -184,6 +221,7 @@ async function handleFormSubmit(e) {
       successBox.classList.remove("hidden");
     }
   } finally {
+    delete form.dataset.sending;
     if (submitBtn) {
       submitBtn.disabled = false;
       submitBtn.innerHTML = originalText;
@@ -217,22 +255,30 @@ function saveLeadToAdmin(lead) {
 function openCatalogModal() {
   const modal = document.getElementById("catalogModal");
   if (modal) {
+    if (modal.open) return;
+    document.getElementById('catalogDownloadNotice')?.classList.add('hidden');
     modal.classList.remove("hidden");
     modal.classList.add("flex");
+    modal.showModal();
+    document.body.style.overflow = 'hidden';
   }
 }
 
 function closeCatalogModal() {
   const modal = document.getElementById("catalogModal");
   if (modal) {
+    modal.close();
     modal.classList.add("hidden");
     modal.classList.remove("flex");
+    document.body.style.overflow = '';
   }
 }
 
 async function handleCatalogueDownload(e) {
   e.preventDefault();
   const form = e.target;
+  if (form.dataset.sending || !form.reportValidity()) return;
+  form.dataset.sending = 'true';
   const inputs = form.querySelectorAll('input');
   const notice = document.getElementById("catalogDownloadNotice");
   const submitBtn = form.querySelector('button[type="submit"]');
@@ -242,6 +288,8 @@ async function handleCatalogueDownload(e) {
 
   if (submitBtn) {
     submitBtn.disabled = true;
+    submitBtn.textContent = 'Sending request...';
+  }
   const catLead = {
     id: 'CAT-' + Date.now().toString(36).toUpperCase(),
     name: name,
@@ -253,10 +301,9 @@ async function handleCatalogueDownload(e) {
     status: 'NEW',
     source: 'Website Catalogue Modal'
   };
-  saveLeadToAdmin(catLead);
 
   try {
-    const response = await fetch('https://formsubmit.co/ajax/gravixequip@gmail.com', {
+    await sendInquiry({
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -272,17 +319,13 @@ async function handleCatalogueDownload(e) {
       })
     });
 
-    if (!response.ok) throw new Error(`Form service returned ${response.status}`);
+    saveLeadToAdmin(catLead);
 
     if (notice) {
       notice.textContent = '✓ Catalogue request sent. Our team will email the PDF to you.';
       notice.classList.remove("hidden");
     }
     form.reset();
-    setTimeout(() => {
-      closeCatalogModal();
-      notice?.classList.add("hidden");
-    }, 2500);
   } catch (err) {
     console.error('Catalogue request failed:', err);
     if (notice) {
@@ -290,6 +333,7 @@ async function handleCatalogueDownload(e) {
       notice.classList.remove("hidden");
     }
   } finally {
+    delete form.dataset.sending;
     if (submitBtn) {
       submitBtn.disabled = false;
       submitBtn.innerHTML = originalText;
@@ -304,6 +348,7 @@ function toggleTechSpecs() {
   if (panel) {
     const isHidden = panel.classList.contains("hidden");
     panel.classList.toggle("hidden");
+    btn?.setAttribute('aria-expanded', String(isHidden));
     if (btn) {
       btn.innerHTML = isHidden 
         ? '<i data-lucide="chevron-up" class="w-4 h-4"></i> Hide Chemical Composition' 
