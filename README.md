@@ -9,15 +9,14 @@ This package is the static GitHub Pages version of the Gravix website. It does *
 - Catalogue requests are also sent by email.
 - Removed the insecure/non-persistent admin backend from the deployable package.
 - Added a GitHub Pages deployment workflow.
-- Updated canonical, Open Graph, robots, sitemap and structured-data URLs to `https://hellosahal.github.io/gravix-website/`.
+- Updated canonical, Open Graph, robots, sitemap and structured-data URLs to `https://gravixequip.github.io/gravix-website/`.
 - Added `.nojekyll` for static hosting.
 
 ## Publish
 
-1. Replace the files in the `hellosahal/gravix-website` repository with these files and push to the `main` branch.
-2. In GitHub: **Settings → Pages → Build and deployment → Source → GitHub Actions**.
-3. Open **Actions** and confirm the `Deploy Gravix to GitHub Pages` workflow completes successfully.
-4. The site URL is `https://hellosahal.github.io/gravix-website/`.
+1. Replace the files in the `gravixequip/gravix-website` repository with these files and push to the `main` branch.
+2. In GitHub: **Settings → Pages → Build and deployment → Source → Deploy from a branch (main / root)**.
+3. The site URL is `https://gravixequip.github.io/gravix-website/`.
 
 ## Important: FormSubmit activation
 

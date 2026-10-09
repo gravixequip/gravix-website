@@ -1,12 +1,10 @@
 /* Gravix Equipment Solutions - Ultra Premium 60/120Hz Animation System */
 
-@layer utilities {
-  .text-glow {
-    text-shadow: 0 0 25px rgba(245, 158, 11, 0.6);
-  }
-  .box-glow {
-    box-shadow: 0 0 35px -5px rgba(245, 158, 11, 0.35);
-  }
+.text-glow {
+  text-shadow: 0 0 25px rgba(245, 158, 11, 0.6);
+}
+.box-glow {
+  box-shadow: 0 0 35px -5px rgba(245, 158, 11, 0.35);
 }
 
 /* Smooth Hardware-Accelerated Scrolling */
@@ -231,3 +229,21 @@ button:disabled { cursor:wait; opacity:.65; }
 .premium-site footer p { overflow-wrap:anywhere; }
 .premium-site .grid > * { min-width:0; }
 .whatsapp-floating > span { padding-right:0; }
+
+/* 2-Column Product Catalog Presentation */
+.product-img-box {
+  background: #ffffff !important;
+  border-bottom: 1px solid #2a373a;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.product-img-box img {
+  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.08));
+}
+.product-card {
+  border-radius: 12px !important;
+  overflow: hidden;
+}
+

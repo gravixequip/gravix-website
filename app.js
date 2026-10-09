@@ -29,9 +29,15 @@ document.addEventListener("DOMContentLoaded", () => {
     btn.setAttribute('aria-pressed', String(btn.classList.contains('active')));
   });
   document.querySelectorAll('.product-card button').forEach(btn => {
-    const item = btn.getAttribute('onclick').match(/'([^']+)'/)[1];
-    btn.removeAttribute('onclick');
-    btn.addEventListener('click', () => requestItemQuote(item, btn.closest('.product-card').dataset.category));
+    const onclickAttr = btn.getAttribute('onclick');
+    if (onclickAttr && onclickAttr.includes("'")) {
+      const match = onclickAttr.match(/'([^']+)'/);
+      if (match) {
+        const item = match[1];
+        btn.removeAttribute('onclick');
+        btn.addEventListener('click', () => requestItemQuote(item, btn.closest('.product-card')?.dataset?.category));
+      }
+    }
   });
   const modal = document.getElementById('catalogModal');
   modal?.addEventListener('cancel', event => { event.preventDefault(); closeCatalogModal(); });
