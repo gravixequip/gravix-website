@@ -328,7 +328,9 @@ button:disabled { cursor:wait; opacity:.65; }
   justify-content: center !important;
   position: relative !important;
   overflow: hidden !important;
-  border-bottom: 1px solid #1e293b !important;
+  border: none !important;
+  border-bottom: none !important;
+  box-shadow: none !important;
   box-sizing: border-box !important;
 }
 
@@ -342,7 +344,9 @@ button:disabled { cursor:wait; opacity:.65; }
   object-fit: contain !important;
   display: block !important;
   margin: 0 auto !important;
-  filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.12)) !important;
+  filter: none !important;
+  box-shadow: none !important;
+  border: none !important;
   transition: transform 0.3s ease !important;
 }
 
