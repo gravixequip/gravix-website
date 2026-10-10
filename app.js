@@ -61,13 +61,10 @@ function filterProducts(category) {
 
   // Update button active state
   buttons.forEach((btn) => {
-    btn.classList.remove("active");
-  });
-
-  buttons.forEach(btn => {
-    const active = btn.dataset.category === category;
-    btn.classList.toggle('active', active);
-    btn.setAttribute('aria-pressed', String(active));
+    const btnCat = btn.getAttribute("data-category") || btn.dataset.category || "";
+    const active = btnCat === category;
+    btn.classList.toggle("active", active);
+    btn.setAttribute("aria-pressed", String(active));
   });
 
   let visibleCount = 0;
@@ -75,10 +72,13 @@ function filterProducts(category) {
   cards.forEach((card) => {
     const cardCat = card.getAttribute("data-category");
     if (category === "all" || cardCat === category) {
+      card.classList.remove("is-hidden", "hidden");
+      card.style.removeProperty("display");
       card.style.display = "flex";
       visibleCount++;
     } else {
-      card.style.display = "none";
+      card.classList.add("is-hidden");
+      card.style.setProperty("display", "none", "important");
     }
   });
 
@@ -111,10 +111,13 @@ function liveSearchProducts() {
     const desc = card.querySelector("p")?.innerText.toLowerCase() || "";
 
     if (!query || searchData.includes(query) || title.includes(query) || desc.includes(query)) {
+      card.classList.remove("is-hidden", "hidden");
+      card.style.removeProperty("display");
       card.style.display = "flex";
       visibleCount++;
     } else {
-      card.style.display = "none";
+      card.classList.add("is-hidden");
+      card.style.setProperty("display", "none", "important");
     }
   });
 

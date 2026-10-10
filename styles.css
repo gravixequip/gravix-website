@@ -297,7 +297,7 @@ button:disabled { cursor:wait; opacity:.65; }
 }
 
 .product-card {
-  display: flex !important;
+  display: flex;
   flex-direction: column !important;
   background: #0d131f !important;
   border: 1px solid #1e293b !important;
@@ -307,6 +307,11 @@ button:disabled { cursor:wait; opacity:.65; }
   transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease !important;
   box-sizing: border-box !important;
   width: 100% !important;
+}
+
+.product-card.is-hidden,
+.product-card.hidden {
+  display: none !important;
 }
 
 .product-card:hover {

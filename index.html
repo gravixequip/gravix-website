@@ -319,10 +319,10 @@
 </div>
 <!-- Clean Category Filter Pills -->
 <div class="flex flex-wrap gap-2 mb-8" id="productFilterNav">
-  <button class="filter-btn active px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-wider text-slate-300 hover:text-white transition" onclick="filterProducts('all')">All Products (33)</button>
-  <button class="filter-btn px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-wider text-slate-300 hover:text-white transition" onclick="filterProducts('tooth-points')">Tooth Points (17)</button>
-  <button class="filter-btn px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-wider text-slate-300 hover:text-white transition" onclick="filterProducts('adapters')">Adaptors (13)</button>
-  <button class="filter-btn px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-wider text-slate-300 hover:text-white transition" onclick="filterProducts('side-cutters')">Side Cutters (3)</button>
+  <button class="filter-btn active px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-wider text-slate-300 hover:text-white transition" data-category="all" onclick="filterProducts('all')">All Products (33)</button>
+  <button class="filter-btn px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-wider text-slate-300 hover:text-white transition" data-category="tooth-points" onclick="filterProducts('tooth-points')">Tooth Points (17)</button>
+  <button class="filter-btn px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-wider text-slate-300 hover:text-white transition" data-category="adapters" onclick="filterProducts('adapters')">Adaptors (13)</button>
+  <button class="filter-btn px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-wider text-slate-300 hover:text-white transition" data-category="side-cutters" onclick="filterProducts('side-cutters')">Side Cutters (3)</button>
 </div>
 <!-- 2-Column Responsive Products Grid -->
 <div class="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-10" id="productsGrid">
