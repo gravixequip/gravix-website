@@ -182,7 +182,7 @@ async function handleFormSubmit(e) {
     submitBtn.innerHTML = '<span class="animate-pulse">Sending Quote Request...</span>';
   }
 
-  // Always log lead into admin dashboard database (localStorage)
+  // Always log lead immediately into admin dashboard database (localStorage)
   const newLead = {
     id: rfqId,
     name: nameVal,
@@ -194,6 +194,7 @@ async function handleFormSubmit(e) {
     status: 'NEW',
     source: 'Website RFQ Form'
   };
+  saveLeadToAdmin(newLead);
 
   try {
     await sendInquiry({
@@ -215,8 +216,6 @@ async function handleFormSubmit(e) {
         '_honey': ''
       })
     });
-
-    saveLeadToAdmin(newLead);
 
     if (successBox) {
       successBox.innerHTML = `✓ Thank you <strong>${escapeForMessage(nameVal)}</strong>! Your RFQ <strong>#${rfqId}</strong> has been sent to our team. We will contact you on WhatsApp/Phone shortly.`;
@@ -310,6 +309,7 @@ async function handleCatalogueDownload(e) {
     status: 'NEW',
     source: 'Website Catalogue Modal'
   };
+  saveLeadToAdmin(catLead);
 
   try {
     await sendInquiry({
@@ -327,8 +327,6 @@ async function handleCatalogueDownload(e) {
         '_captcha': 'false'
       })
     });
-
-    saveLeadToAdmin(catLead);
 
     if (notice) {
       notice.textContent = '✓ Catalogue request sent. Our team will email the PDF to you.';

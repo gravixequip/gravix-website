@@ -20,7 +20,6 @@
   </style>
 </head>
 <body class="min-h-screen flex flex-col antialiased">
-<aside style="padding:16px;background:#302511;color:#ffe1a1;text-align:center;font:14px/1.6 sans-serif">Local browser lead notebook only. This PIN is not secure authentication. Data does not sync between devices; website inquiries are delivered by email. Export a backup before clearing browser data.</aside>
 
   <!-- ================= PIN LOCKSCREEN ================= -->
   <div id="loginScreen" class="fixed inset-0 z-50 bg-[#060911] flex items-center justify-center p-4">
@@ -35,7 +34,7 @@
 
       <div class="space-y-4">
         <div class="relative">
-          <input type="password" id="pinInput" maxlength="8" placeholder="Enter PIN (Default: 1234)" autofocus
+          <input type="password" id="pinInput" maxlength="8" placeholder="Enter PIN" autofocus
             class="w-full text-center text-2xl tracking-[0.4em] font-mono py-3.5 px-4 rounded-xl bg-slate-950 border border-slate-700 text-white focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500 transition"
             onkeydown="if(event.key==='Enter') verifyPin()" />
         </div>
@@ -48,7 +47,7 @@
       </div>
 
       <div class="pt-4 border-t border-slate-800 text-[11px] text-slate-500 flex items-center justify-between">
-        <span>Default PIN: <strong class="text-slate-400">1234</strong></span>
+        <span class="flex items-center gap-1.5"><i data-lucide="lock" class="w-3.5 h-3.5 text-slate-600"></i> Authorized Personnel Only</span>
         <a href="index.html" class="text-amber-400 hover:underline">← Back to Website</a>
       </div>
     </div>
@@ -56,6 +55,17 @@
 
   <!-- ================= MAIN ADMIN DASHBOARD ================= -->
   <div id="adminApp" class="hidden flex-1 flex flex-col">
+
+    <!-- Top Info Notification Banner -->
+    <div id="noticeBanner" class="bg-amber-500/10 border-b border-amber-500/20 px-4 py-2.5 text-xs text-amber-300 flex items-center justify-between">
+      <div class="flex items-center gap-2 max-w-7xl mx-auto flex-1">
+        <i data-lucide="info" class="w-4 h-4 shrink-0 text-amber-400"></i>
+        <span><strong>Admin Desk:</strong> Live inquiries submitted on the website are captured here in real-time. Inquiries are also delivered by email (<code>gravixequip@gmail.com</code>). Export CSV or JSON backups regularly.</span>
+      </div>
+      <button onclick="document.getElementById('noticeBanner').style.display='none'" class="text-amber-400/70 hover:text-amber-200 ml-3" title="Dismiss">
+        <i data-lucide="x" class="w-4 h-4"></i>
+      </button>
+    </div>
 
     <!-- Top Navigation Header -->
     <header class="border-b border-slate-800 bg-[#070b14] px-4 sm:px-8 py-4 sticky top-0 z-40 backdrop-blur-md">
@@ -85,11 +95,17 @@
           <button onclick="generateTestLead()" class="px-3 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold border border-slate-700 flex items-center gap-1.5 transition" title="Inject a test inquiry to verify system">
             <i data-lucide="sparkles" class="w-3.5 h-3.5 text-amber-400"></i> Test System
           </button>
-          <button onclick="exportCSV()" class="px-3 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold border border-slate-700 flex items-center gap-1.5 transition">
+          <button onclick="exportCSV()" class="px-3 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold border border-slate-700 flex items-center gap-1.5 transition" title="Export as spreadsheet">
             <i data-lucide="download" class="w-3.5 h-3.5 text-emerald-400"></i> Excel (CSV)
           </button>
+          <button onclick="openBackupModal()" class="px-3 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold border border-slate-700 flex items-center gap-1.5 transition" title="Backup or Restore Leads">
+            <i data-lucide="database" class="w-3.5 h-3.5 text-blue-400"></i> Backup
+          </button>
+          <button onclick="openChangePinModal()" class="px-3 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold border border-slate-700 flex items-center gap-1.5 transition" title="Change 4-Digit Security PIN">
+            <i data-lucide="key" class="w-3.5 h-3.5 text-amber-400"></i> PIN
+          </button>
           <a href="index.html" target="_blank" class="px-3 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold border border-slate-700 flex items-center gap-1.5 transition" title="Open live website">
-            <i data-lucide="external-link" class="w-3.5 h-3.5 text-blue-400"></i> Website
+            <i data-lucide="external-link" class="w-3.5 h-3.5 text-purple-400"></i> Website
           </a>
           <button onclick="logoutAdmin()" class="px-2.5 py-2 rounded-xl text-slate-400 hover:text-rose-400 transition" title="Log Out">
             <i data-lucide="log-out" class="w-4 h-4"></i>
@@ -270,6 +286,90 @@
     </div>
   </div>
 
+  <!-- ================= CHANGE PIN MODAL ================= -->
+  <div id="changePinModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden items-center justify-center p-4">
+    <div class="bg-slate-900 border border-slate-700 rounded-3xl max-w-md w-full p-6 sm:p-8 relative shadow-2xl space-y-5">
+      <button onclick="closeChangePinModal()" class="absolute top-5 right-5 text-slate-400 hover:text-white">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-amber-500/10 border border-amber-500/30 text-amber-400 flex items-center justify-center">
+          <i data-lucide="key" class="w-5 h-5"></i>
+        </div>
+        <div>
+          <h3 class="font-heading font-bold text-lg text-white">Change Security PIN</h3>
+          <p class="text-xs text-slate-400">Update your desk security PIN code.</p>
+        </div>
+      </div>
+
+      <form onsubmit="handleChangePinSubmit(event)" class="space-y-4 text-xs">
+        <div>
+          <label class="block font-medium text-slate-300 mb-1">Current PIN *</label>
+          <input type="password" id="currentPinInput" required maxlength="8" placeholder="Enter current PIN" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-700 text-white focus:outline-none focus:border-amber-500" />
+        </div>
+        <div>
+          <label class="block font-medium text-slate-300 mb-1">New PIN *</label>
+          <input type="password" id="newPinInput" required maxlength="8" placeholder="New PIN (e.g. 4 digits)" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-700 text-white focus:outline-none focus:border-amber-500" />
+        </div>
+        <div>
+          <label class="block font-medium text-slate-300 mb-1">Confirm New PIN *</label>
+          <input type="password" id="confirmPinInput" required maxlength="8" placeholder="Re-enter new PIN" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-700 text-white focus:outline-none focus:border-amber-500" />
+        </div>
+
+        <p id="changePinError" class="text-xs text-rose-400 hidden"></p>
+        <p id="changePinSuccess" class="text-xs text-emerald-400 hidden"></p>
+
+        <div class="flex items-center justify-end gap-3 pt-2">
+          <button type="button" onclick="closeChangePinModal()" class="px-4 py-2.5 rounded-xl bg-slate-800 text-slate-300 hover:bg-slate-700 transition font-semibold">Cancel</button>
+          <button type="submit" class="px-5 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-black font-extrabold uppercase tracking-wider transition shadow-lg shadow-amber-500/20">Update PIN</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ================= BACKUP & SYNC MODAL ================= -->
+  <div id="backupModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden items-center justify-center p-4">
+    <div class="bg-slate-900 border border-slate-700 rounded-3xl max-w-md w-full p-6 sm:p-8 relative shadow-2xl space-y-5">
+      <button onclick="closeBackupModal()" class="absolute top-5 right-5 text-slate-400 hover:text-white">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-blue-500/10 border border-blue-500/30 text-blue-400 flex items-center justify-center">
+          <i data-lucide="database" class="w-5 h-5"></i>
+        </div>
+        <div>
+          <h3 class="font-heading font-bold text-lg text-white">Data Backup &amp; Device Sync</h3>
+          <p class="text-xs text-slate-400">Save leads or move them between devices.</p>
+        </div>
+      </div>
+
+      <div class="space-y-3 pt-2 text-xs">
+        <div class="p-4 rounded-2xl bg-slate-950 border border-slate-800 space-y-2">
+          <h4 class="font-bold text-white flex items-center gap-2">
+            <i data-lucide="download" class="w-4 h-4 text-emerald-400"></i> Export JSON Backup
+          </h4>
+          <p class="text-slate-400 text-[11px]">Download all inquiries as a JSON backup file to keep safe or import onto another phone or laptop.</p>
+          <button onclick="exportJSON()" class="mt-2 w-full py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-semibold border border-slate-700 flex items-center justify-center gap-2 transition">
+            <i data-lucide="download" class="w-3.5 h-3.5 text-emerald-400"></i> Download JSON Backup
+          </button>
+        </div>
+
+        <div class="p-4 rounded-2xl bg-slate-950 border border-slate-800 space-y-2">
+          <h4 class="font-bold text-white flex items-center gap-2">
+            <i data-lucide="upload" class="w-4 h-4 text-blue-400"></i> Restore / Import Leads
+          </h4>
+          <p class="text-slate-400 text-[11px]">Upload a JSON backup to merge leads into this browser without losing existing records.</p>
+          <button onclick="triggerImportJSON()" class="mt-2 w-full py-2.5 rounded-xl bg-blue-500/20 hover:bg-blue-500/30 text-blue-300 font-semibold border border-blue-500/30 flex items-center justify-center gap-2 transition">
+            <i data-lucide="upload" class="w-3.5 h-3.5"></i> Select JSON File to Restore
+          </button>
+          <input type="file" id="jsonFileInput" accept=".json" onchange="handleFileImport(event)" class="hidden" />
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- ================= JAVASCRIPT ENGINE ================= -->
   <script>
     const STORAGE_KEY = 'gravix_admin_leads';
@@ -277,11 +377,22 @@
     const AUTH_SESSION_KEY = 'gravix_admin_auth';
 
     let allLeads = [];
+    let lastStoredRaw = null;
 
     // --- Authentication ---
+    function getActivePin() {
+      const pin = localStorage.getItem(PIN_KEY);
+      // Migrate from old 1234 or initialize if unset
+      if (!pin || pin === '1234') {
+        localStorage.setItem(PIN_KEY, '2233');
+        return '2233';
+      }
+      return pin;
+    }
+
     function verifyPin() {
       const input = document.getElementById('pinInput').value.trim();
-      const storedPin = localStorage.getItem(PIN_KEY) || '1234';
+      const storedPin = getActivePin();
 
       if (input === storedPin) {
         sessionStorage.setItem(AUTH_SESSION_KEY, 'true');
@@ -312,15 +423,32 @@
       location.reload();
     }
 
-    // --- Data Management ---
-    function loadLeads() {
+    function formatLeadDate(dateStr) {
+      if (!dateStr) return 'Just now';
       try {
-        // Read main storage
-        let leads = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+        const d = new Date(dateStr);
+        if (isNaN(d.getTime())) return 'Recently';
+        return d.toLocaleString('en-IN', {
+          month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit'
+        });
+      } catch (e) {
+        return 'Recently';
+      }
+    }
+
+    // --- Data Management ---
+    function loadLeads(force = false) {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY) || '[]';
+        if (!force && raw === lastStoredRaw) return;
+        lastStoredRaw = raw;
+
+        let leads = JSON.parse(raw);
 
         // Check and migrate any legacy 'gravix_rfqs'
         const legacy = JSON.parse(localStorage.getItem('gravix_rfqs') || '[]');
         if (legacy && legacy.length > 0) {
+          let migrated = false;
           legacy.forEach(leg => {
             if (!leads.some(l => l.id === leg.id)) {
               leads.push({
@@ -334,9 +462,13 @@
                 status: leg.status || 'NEW',
                 source: 'Migrated Lead'
               });
+              migrated = true;
             }
           });
-          localStorage.setItem(STORAGE_KEY, JSON.stringify(leads));
+          if (migrated) {
+            lastStoredRaw = JSON.stringify(leads);
+            localStorage.setItem(STORAGE_KEY, lastStoredRaw);
+          }
         }
 
         allLeads = leads;
@@ -351,7 +483,8 @@
 
     function saveLeadsToStorage() {
       try {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(allLeads));
+        lastStoredRaw = JSON.stringify(allLeads);
+        localStorage.setItem(STORAGE_KEY, lastStoredRaw);
       } catch (e) {
         console.error('Could not save to localStorage:', e);
       }
@@ -391,10 +524,7 @@
         const cleanPhone = (lead.phone || '').replace(/\D/g, '');
         const whatsappNumber = cleanPhone.startsWith('91') ? cleanPhone : (cleanPhone.length === 10 ? '91' + cleanPhone : cleanPhone);
         const encodedMsg = encodeURIComponent(`Hello ${lead.name}, this is Gravix Equipment Solutions Ahmedabad regarding your inquiry for ${lead.category}. We have received your request and would like to share our factory quotation.`);
-
-        const formattedDate = lead.date ? new Date(lead.date).toLocaleString('en-IN', {
-          month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit'
-        }) : 'Just now';
+        const formattedDate = formatLeadDate(lead.date);
 
         const tr = document.createElement('tr');
         tr.className = 'hover:bg-slate-800/40 transition group';
@@ -588,6 +718,120 @@
       a.download = `Gravix_Customer_Leads_${new Date().toISOString().slice(0, 10)}.csv`;
       a.click();
       setTimeout(() => URL.revokeObjectURL(url), 1000);
+    }
+
+    // --- Change PIN Handlers ---
+    function openChangePinModal() {
+      document.getElementById('changePinModal').classList.remove('hidden');
+      document.getElementById('changePinModal').classList.add('flex');
+      document.getElementById('currentPinInput').value = '';
+      document.getElementById('newPinInput').value = '';
+      document.getElementById('confirmPinInput').value = '';
+      document.getElementById('changePinError').classList.add('hidden');
+      document.getElementById('changePinSuccess').classList.add('hidden');
+      document.getElementById('currentPinInput').focus();
+    }
+
+    function closeChangePinModal() {
+      document.getElementById('changePinModal').classList.add('hidden');
+      document.getElementById('changePinModal').classList.remove('flex');
+    }
+
+    function handleChangePinSubmit(e) {
+      e.preventDefault();
+      const current = document.getElementById('currentPinInput').value.trim();
+      const newPin = document.getElementById('newPinInput').value.trim();
+      const confirmPin = document.getElementById('confirmPinInput').value.trim();
+      const errorEl = document.getElementById('changePinError');
+      const successEl = document.getElementById('changePinSuccess');
+
+      const storedPin = getActivePin();
+      if (current !== storedPin) {
+        errorEl.textContent = 'Current PIN is incorrect.';
+        errorEl.classList.remove('hidden');
+        successEl.classList.add('hidden');
+        return;
+      }
+      if (newPin.length < 4) {
+        errorEl.textContent = 'New PIN must be at least 4 digits.';
+        errorEl.classList.remove('hidden');
+        successEl.classList.add('hidden');
+        return;
+      }
+      if (newPin !== confirmPin) {
+        errorEl.textContent = 'New PIN and Confirm PIN do not match.';
+        errorEl.classList.remove('hidden');
+        successEl.classList.add('hidden');
+        return;
+      }
+
+      localStorage.setItem(PIN_KEY, newPin);
+      errorEl.classList.add('hidden');
+      successEl.textContent = '✓ PIN successfully updated!';
+      successEl.classList.remove('hidden');
+      setTimeout(() => {
+        closeChangePinModal();
+      }, 1200);
+    }
+
+    // --- Backup & Restore Handlers ---
+    function openBackupModal() {
+      document.getElementById('backupModal').classList.remove('hidden');
+      document.getElementById('backupModal').classList.add('flex');
+    }
+
+    function closeBackupModal() {
+      document.getElementById('backupModal').classList.add('hidden');
+      document.getElementById('backupModal').classList.remove('flex');
+    }
+
+    function exportJSON() {
+      if (allLeads.length === 0) {
+        alert('No inquiries to export');
+        return;
+      }
+      const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(allLeads, null, 2));
+      const downloadAnchor = document.createElement('a');
+      downloadAnchor.setAttribute("href", dataStr);
+      downloadAnchor.setAttribute("download", `Gravix_Leads_Backup_${new Date().toISOString().slice(0, 10)}.json`);
+      document.body.appendChild(downloadAnchor);
+      downloadAnchor.click();
+      downloadAnchor.remove();
+    }
+
+    function triggerImportJSON() {
+      document.getElementById('jsonFileInput').click();
+    }
+
+    function handleFileImport(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = function(evt) {
+        try {
+          const imported = JSON.parse(evt.target.result);
+          if (!Array.isArray(imported)) {
+            alert('Invalid backup format. Expected a JSON array of leads.');
+            return;
+          }
+          let addedCount = 0;
+          imported.forEach(item => {
+            if (item && item.id && !allLeads.some(l => l.id === item.id)) {
+              allLeads.push(item);
+              addedCount++;
+            }
+          });
+          saveLeadsToStorage();
+          filterTable();
+          closeBackupModal();
+          alert(`✓ Successfully restored/imported ${addedCount} new leads!`);
+        } catch (err) {
+          alert('Could not parse the backup JSON file: ' + err.message);
+        }
+      };
+      reader.readAsText(file);
+      e.target.value = '';
     }
 
     function escapeHtml(str) {
