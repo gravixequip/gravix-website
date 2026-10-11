@@ -616,7 +616,7 @@
             <div class="text-[11px] text-slate-400">${escapeHtml(lead.company || 'Direct Buyer')}</div>
           </td>
           <td class="py-4 px-5">
-            <div class="font-mono text-xs text-slate-200">${escapeHtml(lead.phone || 'N/A')}</div>
+            <div class="font-mono text-xs text-slate-200">${escapeHtml(String(lead.phone || 'N/A').replace(/^'/, ''))}</div>
             <div class="flex items-center gap-2 mt-1">
               ${cleanPhone ? `
                 <a href="https://wa.me/${whatsappNumber}?text=${encodedMsg}" target="_blank" class="inline-flex items-center gap-1 text-[11px] text-emerald-400 hover:text-emerald-300 font-semibold">
@@ -987,11 +987,15 @@ function doPost(e) {
       const url = getCloudSyncUrl();
       if (!url) return;
       try {
+        const payload = { ...lead };
+        if (payload.phone && String(payload.phone).startsWith('+')) {
+          payload.phone = "'" + payload.phone;
+        }
         fetch(url, {
           method: 'POST',
           mode: 'no-cors',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(lead)
+          body: JSON.stringify(payload)
         }).catch(err => console.warn('Cloud sync error:', err));
       } catch (err) {
         console.warn('Could not dispatch cloud sync:', err);
@@ -1135,6 +1139,7 @@ function doPost(e) {
         if (data && data.rfqs && Array.isArray(data.rfqs)) {
           let hasNew = false;
           data.rfqs.forEach(cloudLead => {
+            if (cloudLead.phone) cloudLead.phone = String(cloudLead.phone).replace(/^'/, '');
             const existingIdx = allLeads.findIndex(l => l.id === cloudLead.id);
             if (existingIdx === -1) {
               allLeads.unshift(cloudLead);

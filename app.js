@@ -259,11 +259,15 @@ function syncLeadToCloud(lead) {
   const url = getCloudSyncUrl();
   if (!url) return;
   try {
+    const payload = { ...lead };
+    if (payload.phone && String(payload.phone).startsWith('+')) {
+      payload.phone = "'" + payload.phone;
+    }
     fetch(url, {
       method: 'POST',
       mode: 'no-cors',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(lead)
+      body: JSON.stringify(payload)
     }).catch(err => console.warn('Cloud sync error:', err));
   } catch (err) {
     console.warn('Could not dispatch cloud sync:', err);
