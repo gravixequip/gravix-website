@@ -244,7 +244,33 @@ function escapeForMessage(value) {
   }[char]));
 }
 
-// Save lead into localStorage for Admin Dashboard
+// Google Sheet Cloud Sync
+const CLOUD_SYNC_KEY = 'gravix_cloud_url';
+
+function getCloudSyncUrl() {
+  try {
+    return localStorage.getItem(CLOUD_SYNC_KEY) || window.GRAVIX_CLOUD_URL || '';
+  } catch (e) {
+    return window.GRAVIX_CLOUD_URL || '';
+  }
+}
+
+function syncLeadToCloud(lead) {
+  const url = getCloudSyncUrl();
+  if (!url) return;
+  try {
+    fetch(url, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(lead)
+    }).catch(err => console.warn('Cloud sync error:', err));
+  } catch (err) {
+    console.warn('Could not dispatch cloud sync:', err);
+  }
+}
+
+// Save lead into localStorage for Admin Dashboard and sync to Google Sheet
 function saveLeadToAdmin(lead) {
   try {
     const key = 'gravix_admin_leads';
@@ -257,6 +283,9 @@ function saveLeadToAdmin(lead) {
   } catch (err) {
     console.warn('LocalStorage save failed:', err);
   }
+
+  // Also sync to Google Sheet
+  syncLeadToCloud(lead);
 }
 
 // Catalogue Modal

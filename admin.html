@@ -81,7 +81,9 @@
               <h1 class="font-heading font-extrabold text-lg text-white tracking-wider">
                 GRAVIX <span class="text-amber-500">LEADS DESK</span>
               </h1>
-              <span class="text-[10px] font-bold uppercase bg-emerald-500/20 text-emerald-400 px-2 py-0.5 rounded-full border border-emerald-500/30">Live Sync</span>
+              <span id="cloudStatusBadge" onclick="openCloudModal()" class="cursor-pointer text-[10px] font-bold uppercase bg-amber-500/20 text-amber-300 hover:bg-amber-500/30 px-2.5 py-0.5 rounded-full border border-amber-500/30 flex items-center gap-1.5 transition" title="Click to configure Google Sheet live sync">
+                <span class="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse"></span> Google Sheet Setup
+              </span>
             </div>
             <p class="text-[11px] text-slate-400">Real-Time Customer Quotations &amp; Order Inquiries</p>
           </div>
@@ -97,6 +99,9 @@
           </button>
           <button onclick="exportCSV()" class="px-3 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold border border-slate-700 flex items-center gap-1.5 transition" title="Export as spreadsheet">
             <i data-lucide="download" class="w-3.5 h-3.5 text-emerald-400"></i> Excel (CSV)
+          </button>
+          <button onclick="openCloudModal()" class="px-3 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold border border-slate-700 flex items-center gap-1.5 transition" title="Connect Google Sheet Cloud Sync">
+            <i data-lucide="file-spreadsheet" class="w-3.5 h-3.5 text-emerald-400"></i> Google Sheet
           </button>
           <button onclick="openBackupModal()" class="px-3 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold border border-slate-700 flex items-center gap-1.5 transition" title="Backup or Restore Leads">
             <i data-lucide="database" class="w-3.5 h-3.5 text-blue-400"></i> Backup
@@ -370,7 +375,79 @@
     </div>
   </div>
 
+  <!-- ================= GOOGLE SHEET CLOUD MODAL ================= -->
+  <div id="cloudModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden items-center justify-center p-4">
+    <div class="bg-slate-900 border border-slate-700 rounded-3xl max-w-xl w-full p-6 sm:p-8 relative shadow-2xl space-y-5 max-h-[90vh] overflow-y-auto">
+      <button onclick="closeCloudModal()" class="absolute top-5 right-5 text-slate-400 hover:text-white">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 flex items-center justify-center">
+          <i data-lucide="file-spreadsheet" class="w-5 h-5"></i>
+        </div>
+        <div>
+          <h3 class="font-heading font-bold text-lg text-white">Google Sheet Live Sync</h3>
+          <p class="text-xs text-slate-400">Receive inquiries from any phone or computer directly into Google Sheets &amp; Admin Desk.</p>
+        </div>
+      </div>
+
+      <div class="space-y-4 text-xs">
+        <!-- Status Box -->
+        <div id="cloudStatusBox" class="p-3.5 rounded-xl bg-slate-950 border border-slate-800 flex items-center justify-between">
+          <div class="flex items-center gap-2">
+            <span id="cloudStatusDot" class="w-2.5 h-2.5 rounded-full bg-amber-400 animate-pulse"></span>
+            <span id="cloudStatusText" class="text-slate-300 font-semibold">Not Connected Yet</span>
+          </div>
+          <button type="button" onclick="testCloudSync()" id="testSyncBtn" class="px-3 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 text-[11px] font-semibold transition hidden">
+            Test Sync Now
+          </button>
+        </div>
+
+        <!-- Instructions -->
+        <div class="space-y-2.5 text-slate-300 bg-slate-950/60 p-4 rounded-2xl border border-slate-800/80">
+          <p class="font-bold text-white text-[13px] flex items-center gap-1.5">
+            <i data-lucide="help-circle" class="w-4 h-4 text-amber-400"></i> Easy 2-Minute Setup:
+          </p>
+          <ol class="list-decimal list-inside space-y-1.5 text-[11px] text-slate-400 leading-relaxed">
+            <li>Open a new Google Sheet at <a href="https://sheets.new" target="_blank" class="text-emerald-400 underline font-semibold">sheets.new</a>.</li>
+            <li>In the top menu, click <strong>Extensions → Apps Script</strong>.</li>
+            <li>Delete any code in the editor, click <strong>Copy Code</strong> below, paste it, and save (Ctrl + S).</li>
+            <li>Click <strong>Deploy → New deployment</strong>, choose <strong>Web app</strong>. Under <em>"Who has access"</em>, choose <strong>Anyone</strong>, then click <strong>Deploy</strong>.</li>
+            <li>Copy the <strong>Web App URL</strong> and paste it into the box below!</li>
+          </ol>
+        </div>
+
+        <!-- Script Copy Area -->
+        <div class="space-y-1.5">
+          <div class="flex items-center justify-between">
+            <label class="font-semibold text-slate-300 text-[11px]">Google Apps Script Code:</label>
+            <button type="button" onclick="copyAppsScriptCode()" id="copyScriptBtn" class="text-amber-400 hover:text-amber-300 text-[11px] font-semibold flex items-center gap-1">
+              <i data-lucide="copy" class="w-3 h-3"></i> Copy Code
+            </button>
+          </div>
+          <textarea id="appsScriptCodeBlock" readonly rows="5" class="w-full p-2.5 rounded-xl bg-slate-950 border border-slate-800 font-mono text-[10px] text-slate-400 focus:outline-none resize-none"></textarea>
+        </div>
+
+        <!-- URL Input -->
+        <div>
+          <label class="block font-medium text-slate-300 mb-1">Your Google Web App URL *</label>
+          <input type="url" id="cloudUrlInput" placeholder="https://script.google.com/macros/s/AKfycb.../exec" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-700 text-white focus:outline-none focus:border-emerald-500 text-xs font-mono" />
+          <p class="text-[10px] text-slate-500 mt-1">This connects both your website forms and this admin portal directly to your Google Sheet.</p>
+        </div>
+
+        <p id="cloudSaveNotice" class="text-xs text-emerald-400 hidden"></p>
+
+        <div class="flex items-center justify-end gap-3 pt-2">
+          <button type="button" onclick="closeCloudModal()" class="px-4 py-2.5 rounded-xl bg-slate-800 text-slate-300 hover:bg-slate-700 transition font-semibold">Cancel</button>
+          <button type="button" onclick="saveCloudSyncUrl()" class="px-5 py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-black font-extrabold uppercase tracking-wider transition shadow-lg shadow-emerald-500/20">Save &amp; Connect</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- ================= JAVASCRIPT ENGINE ================= -->
+  <script src="cloud-config.js"></script>
   <script>
     const STORAGE_KEY = 'gravix_admin_leads';
     const PIN_KEY = 'gravix_admin_pin';
@@ -665,6 +742,7 @@
 
       allLeads.unshift(newLead);
       saveLeadsToStorage();
+      syncLeadToCloud(newLead);
       closeAddLeadModal();
       e.target.reset();
       filterTable();
@@ -841,15 +919,261 @@
       });
     }
 
+    // --- Google Sheet Cloud Sync Handlers ---
+    const CLOUD_SYNC_KEY = 'gravix_cloud_url';
+    const APPS_SCRIPT_SOURCE = `function doGet(e) {
+  var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+  var rows = sheet.getDataRange().getValues();
+  if (rows.length <= 1) {
+    return ContentService.createTextOutput(JSON.stringify({ rfqs: [] }))
+      .setMimeType(ContentService.MimeType.JSON);
+  }
+  var rfqs = [];
+  for (var i = rows.length - 1; i >= 1; i--) {
+    var r = rows[i];
+    if (r[0] || r[2] || r[4]) {
+      rfqs.push({
+        id: String(r[0] || ''),
+        date: String(r[1] || ''),
+        name: String(r[2] || ''),
+        company: String(r[3] || ''),
+        phone: String(r[4] || ''),
+        category: String(r[5] || ''),
+        message: String(r[6] || ''),
+        status: String(r[7] || 'NEW'),
+        source: String(r[8] || 'Website')
+      });
+    }
+  }
+  return ContentService.createTextOutput(JSON.stringify({ rfqs: rfqs }))
+    .setMimeType(ContentService.MimeType.JSON);
+}
+
+function doPost(e) {
+  try {
+    var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+    if (sheet.getLastRow() === 0) {
+      sheet.appendRow(["Inquiry ID", "Date", "Customer Name", "Company", "Phone", "Product Category", "Message / Machine Details", "Status", "Source"]);
+    }
+    var data = JSON.parse(e.postData.contents || '{}');
+    sheet.appendRow([
+      data.id || ('RFQ-' + new Date().getTime().toString(36).toUpperCase()),
+      data.date || new Date().toISOString(),
+      data.name || '',
+      data.company || '',
+      data.phone || '',
+      data.category || '',
+      data.message || '',
+      data.status || 'NEW',
+      data.source || 'Website'
+    ]);
+    return ContentService.createTextOutput(JSON.stringify({ success: true }))
+      .setMimeType(ContentService.MimeType.JSON);
+  } catch (err) {
+    return ContentService.createTextOutput(JSON.stringify({ error: err.toString() }))
+      .setMimeType(ContentService.MimeType.JSON);
+  }
+}`;
+
+    function getCloudSyncUrl() {
+      try {
+        return localStorage.getItem(CLOUD_SYNC_KEY) || window.GRAVIX_CLOUD_URL || '';
+      } catch (e) {
+        return window.GRAVIX_CLOUD_URL || '';
+      }
+    }
+
+    function syncLeadToCloud(lead) {
+      const url = getCloudSyncUrl();
+      if (!url) return;
+      try {
+        fetch(url, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(lead)
+        }).catch(err => console.warn('Cloud sync error:', err));
+      } catch (err) {
+        console.warn('Could not dispatch cloud sync:', err);
+      }
+    }
+
+    function updateCloudBadge() {
+      const url = getCloudSyncUrl();
+      const badge = document.getElementById('cloudStatusBadge');
+      const dot = document.getElementById('cloudStatusDot');
+      const text = document.getElementById('cloudStatusText');
+      const testBtn = document.getElementById('testSyncBtn');
+      const input = document.getElementById('cloudUrlInput');
+
+      if (input && !input.value) input.value = url;
+
+      if (url) {
+        if (badge) {
+          badge.className = "cursor-pointer text-[10px] font-bold uppercase bg-emerald-500/20 text-emerald-400 hover:bg-emerald-500/30 px-2.5 py-0.5 rounded-full border border-emerald-500/30 flex items-center gap-1.5 transition";
+          badge.innerHTML = '<span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> Google Sheet Synced';
+        }
+        if (dot) dot.className = "w-2.5 h-2.5 rounded-full bg-emerald-400";
+        if (text) text.innerText = "Connected to Google Sheet";
+        if (testBtn) testBtn.classList.remove('hidden');
+      } else {
+        if (badge) {
+          badge.className = "cursor-pointer text-[10px] font-bold uppercase bg-amber-500/20 text-amber-300 hover:bg-amber-500/30 px-2.5 py-0.5 rounded-full border border-amber-500/30 flex items-center gap-1.5 transition";
+          badge.innerHTML = '<span class="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse"></span> Google Sheet Setup';
+        }
+        if (dot) dot.className = "w-2.5 h-2.5 rounded-full bg-amber-400 animate-pulse";
+        if (text) text.innerText = "Not Connected Yet";
+        if (testBtn) testBtn.classList.add('hidden');
+      }
+    }
+
+    function openCloudModal() {
+      const modal = document.getElementById('cloudModal');
+      const codeBlock = document.getElementById('appsScriptCodeBlock');
+      const input = document.getElementById('cloudUrlInput');
+      if (codeBlock) codeBlock.value = APPS_SCRIPT_SOURCE;
+      if (input) input.value = getCloudSyncUrl();
+      updateCloudBadge();
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+
+    function closeCloudModal() {
+      const modal = document.getElementById('cloudModal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+
+    function copyAppsScriptCode() {
+      const codeBlock = document.getElementById('appsScriptCodeBlock');
+      if (codeBlock) {
+        navigator.clipboard.writeText(APPS_SCRIPT_SOURCE).then(() => {
+          const btn = document.getElementById('copyScriptBtn');
+          if (btn) btn.innerHTML = '<i data-lucide="check" class="w-3 h-3 text-emerald-400"></i> Copied!';
+          if (window.lucide) window.lucide.createIcons();
+          setTimeout(() => {
+            if (btn) btn.innerHTML = '<i data-lucide="copy" class="w-3 h-3"></i> Copy Code';
+            if (window.lucide) window.lucide.createIcons();
+          }, 2000);
+        });
+      }
+    }
+
+    async function saveCloudSyncUrl() {
+      const input = document.getElementById('cloudUrlInput');
+      const notice = document.getElementById('cloudSaveNotice');
+      const rawUrl = (input?.value || '').trim();
+
+      if (!rawUrl) {
+        localStorage.removeItem(CLOUD_SYNC_KEY);
+        updateCloudBadge();
+        notice.textContent = 'Cleared cloud connection. Running in local mode.';
+        notice.className = 'text-xs text-amber-400';
+        notice.classList.remove('hidden');
+        return;
+      }
+
+      if (!rawUrl.startsWith('https://script.google.com/macros/s/')) {
+        alert('Please enter a valid Google Apps Script Web App URL starting with https://script.google.com/macros/s/...');
+        return;
+      }
+
+      localStorage.setItem(CLOUD_SYNC_KEY, rawUrl);
+      updateCloudBadge();
+
+      notice.textContent = '✓ Saved! Testing connection to your Google Sheet...';
+      notice.className = 'text-xs text-emerald-400';
+      notice.classList.remove('hidden');
+
+      await testCloudSync(true);
+    }
+
+    async function testCloudSync(autoCloseOnSuccess = false) {
+      const url = getCloudSyncUrl();
+      const notice = document.getElementById('cloudSaveNotice');
+      if (!url) {
+        alert('Please enter a Google Web App URL first.');
+        return;
+      }
+
+      try {
+        const res = await fetch(url);
+        const data = await res.json();
+        if (data && Array.isArray(data.rfqs)) {
+          notice.textContent = `✓ Connected! Found ${data.rfqs.length} lead(s) in your Google Sheet. Syncing...`;
+          notice.className = 'text-xs text-emerald-400';
+          notice.classList.remove('hidden');
+
+          await fetchLeadsFromCloud();
+          updateCloudBadge();
+
+          if (autoCloseOnSuccess) {
+            setTimeout(() => {
+              closeCloudModal();
+              alert('✓ Google Sheet successfully connected! Inquiries from all devices will now sync live.');
+            }, 1200);
+          }
+        } else {
+          notice.textContent = '⚠ Connected to script, but received unexpected response format.';
+          notice.className = 'text-xs text-amber-400';
+          notice.classList.remove('hidden');
+        }
+      } catch (err) {
+        console.error('Test sync error:', err);
+        notice.textContent = '⚠ Could not reach Google Sheet Web App. Make sure "Who has access" was set to "Anyone" when deploying.';
+        notice.className = 'text-xs text-rose-400';
+        notice.classList.remove('hidden');
+      }
+    }
+
+    async function fetchLeadsFromCloud() {
+      const url = getCloudSyncUrl();
+      if (!url) return;
+      try {
+        const response = await fetch(url);
+        const data = await response.json();
+        if (data && data.rfqs && Array.isArray(data.rfqs)) {
+          let hasNew = false;
+          data.rfqs.forEach(cloudLead => {
+            const existingIdx = allLeads.findIndex(l => l.id === cloudLead.id);
+            if (existingIdx === -1) {
+              allLeads.unshift(cloudLead);
+              hasNew = true;
+            } else {
+              if (cloudLead.status && allLeads[existingIdx].status !== cloudLead.status) {
+                allLeads[existingIdx].status = cloudLead.status;
+                hasNew = true;
+              }
+            }
+          });
+          if (hasNew) {
+            saveLeadsToStorage();
+            filterTable();
+          }
+        }
+      } catch (err) {
+        console.warn('Background cloud poll notice:', err);
+      }
+    }
+
     function initDashboard() {
       loadLeads();
+      updateCloudBadge();
+      fetchLeadsFromCloud();
+
       if (window.lucide) window.lucide.createIcons();
-      // Listen for cross-tab storage events (so if index.html is submitted in another tab, this tab updates live!)
+      // Listen for cross-tab storage events
       window.addEventListener('storage', (e) => {
         if (e.key === STORAGE_KEY) loadLeads();
+        if (e.key === CLOUD_SYNC_KEY) {
+          updateCloudBadge();
+          fetchLeadsFromCloud();
+        }
       });
-      // Periodic check every 3 seconds
+      // Periodic check every 3 seconds for local storage
       setInterval(loadLeads, 3000);
+      // Periodic check every 12 seconds for Google Sheet
+      setInterval(fetchLeadsFromCloud, 12000);
     }
 
     document.addEventListener('DOMContentLoaded', () => {
