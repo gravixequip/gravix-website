@@ -96,14 +96,114 @@ html {
   transform: translateY(-1px);
 }
 
-/* Floating WhatsApp Pulse Button */
+/* Floating Live WhatsApp Widget */
 .whatsapp-floating {
-  animation: pulseGlow 2.5s infinite;
-  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 9999;
+  display: inline-flex;
+  align-items: center;
+  background: #25D366;
+  background: linear-gradient(135deg, #25D366 0%, #1ea952 100%);
+  color: #ffffff;
+  border-radius: 9999px;
+  padding: 13px;
+  box-shadow: 0 8px 24px rgba(37, 211, 102, 0.45), 0 4px 12px rgba(0, 0, 0, 0.35);
+  text-decoration: none;
+  animation: waLivePulse 2.8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.whatsapp-floating svg {
+  width: 28px;
+  height: 28px;
+  display: block;
+}
+
+.whatsapp-floating svg path {
+  fill: #ffffff !important;
 }
 
 .whatsapp-floating:hover {
-  transform: scale(1.1) translateY(-3px);
+  background: linear-gradient(135deg, #28e26d 0%, #20b85a 100%);
+  transform: translateY(-3px) scale(1.06);
+  box-shadow: 0 14px 32px rgba(37, 211, 102, 0.65), 0 6px 16px rgba(0, 0, 0, 0.4);
+}
+
+.whatsapp-floating:active {
+  transform: translateY(-1px) scale(0.98);
+}
+
+@keyframes waLivePulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.75), 0 8px 24px rgba(0, 0, 0, 0.35);
+  }
+  60% {
+    box-shadow: 0 0 0 16px rgba(37, 211, 102, 0), 0 10px 28px rgba(0, 0, 0, 0.4);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(37, 211, 102, 0), 0 8px 24px rgba(0, 0, 0, 0.35);
+  }
+}
+
+.whatsapp-floating .wa-label {
+  max-width: 0;
+  opacity: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  transition: max-width 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.25s ease, padding 0.35s ease;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #ffffff;
+  padding: 0;
+}
+
+.whatsapp-floating:hover .wa-label {
+  max-width: 170px;
+  opacity: 1;
+  padding-left: 8px;
+  padding-right: 6px;
+}
+
+.whatsapp-floating .wa-live-badge {
+  position: absolute;
+  top: -3px;
+  right: -3px;
+  display: flex;
+  width: 12px;
+  height: 12px;
+}
+
+.whatsapp-floating .wa-live-ping {
+  position: absolute;
+  display: inline-flex;
+  height: 100%;
+  width: 100%;
+  border-radius: 9999px;
+  background-color: #ffffff;
+  opacity: 0.85;
+  animation: waPing 1.6s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+.whatsapp-floating .wa-live-dot {
+  position: relative;
+  display: inline-flex;
+  border-radius: 9999px;
+  height: 12px;
+  width: 12px;
+  background-color: #22c55e;
+  border: 2px solid #ffffff;
+}
+
+@keyframes waPing {
+  70%, 100% {
+    transform: scale(2.2);
+    opacity: 0;
+  }
 }
 
 /* Premium industrial edition */
@@ -170,7 +270,7 @@ body.premium-site{background:var(--ink);color:#edf0ec}
 .faq-section{background:var(--paper);padding:85px 0;color:var(--ink)}.faq-layout{display:grid;grid-template-columns:1fr 1.4fr;gap:90px}.faq-layout>div>p{font-size:13px;line-height:1.9;color:#65706a;margin-top:25px}.faq-layout a{color:#82611e}
 .faq-items details{border-bottom:1px solid #d0d5c8;padding:21px 0}.faq-items details:first-child{border-top:1px solid #d0d5c8}.faq-items summary{font-size:14px;font-weight:500;cursor:pointer;list-style:none;display:flex;justify-content:space-between;gap:20px}.faq-items summary::after{content:'+';font-size:19px;color:#82611e}.faq-items details[open] summary::after{content:'−'}.faq-items details p{font-size:13px;color:#626d65;line-height:1.85;padding:16px 25px 0 0}
 .premium-site #quote{background:#101719!important;padding:85px 0}.premium-site #quote h2{text-transform:none!important;font-weight:500;letter-spacing:-.05em;font-size:clamp(32px,3.5vw,45px);line-height:1.16}.premium-site #quote .rounded-2xl{border-radius:6px;background:#192325;border-color:#ffffff18}.premium-site #quote input,.premium-site #quote select,.premium-site #quote textarea{background:#11191b;border-color:#384345;font-size:13px;min-height:44px}.form-privacy{font-size:10px;line-height:1.8;color:#98a5a0;padding-top:4px}
-.premium-site footer{background:#0c1214}.premium-site .whatsapp-floating{animation:none;box-shadow:0 4px 20px #0004}
+.premium-site footer{background:#0c1214}
 .premium-site :focus-visible{outline:2px solid #c79534;outline-offset:4px}
 @media(max-width:1023px){.premium-hero{padding:65px 0 48px!important;min-height:0}.hero-side{padding-top:0}.hero-spec-card{max-width:520px}.premium-hero::after{background:linear-gradient(90deg,#101719ee,#1017198c),linear-gradient(0deg,#101719,transparent)}.premium-site header nav{height:74px}.premium-site #mobileMenu{background:#172022}}
 @media(max-width:640px){.brand-wordmark{font-size:19px}.brand-wordmark small{font-size:6px}.brand-lockup{gap:7px}.brand-lockup img{width:37px;height:37px}.premium-site header nav{height:68px}.premium-site header button[onclick="openCatalogModal()"]{display:none}.premium-hero h1{font-size:49px!important}.premium-hero .hero-copy>p{font-size:14px}.hero-stats .font-heading{font-size:22px}.hero-stats>div{padding:0 10px}.hero-stats .uppercase{font-size:8px}.hero-side{display:none}.premium-catalog,.order-section,.faq-section{padding:58px 0!important}.editorial-container{padding:0 20px}.order-grid{grid-template-columns:1fr;gap:25px}.order-grid article{padding:0 0 23px;border-bottom:1px solid #c9d0c0}.order-grid h3{margin-top:10px}.faq-layout{grid-template-columns:1fr;gap:35px}.premium-site #quality,.premium-site #quote{padding:60px 0}.product-visual{height:145px!important}#productFilterNav{flex-wrap:nowrap;overflow-x:auto;padding-bottom:8px}.filter-btn{white-space:nowrap;flex-shrink:0}#compatibility .grid>div{padding:8px}.premium-site .whatsapp-floating{bottom:16px;right:16px}}
@@ -228,7 +328,7 @@ button:disabled { cursor:wait; opacity:.65; }
 
 .premium-site footer p { overflow-wrap:anywhere; }
 .premium-site .grid > * { min-width:0; }
-.whatsapp-floating > span { padding-right:0; }
+
 
 /* 2-Column Responsive Product Catalog Grid & Presentation */
 #products {
