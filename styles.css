@@ -605,4 +605,53 @@ button:disabled { cursor:wait; opacity:.65; }
   transform: translateY(-1px) !important;
 }
 
+/* About Us Section - Premium Editorial & Global Operations Styles */
+.about-section {
+  position: relative;
+  background: radial-gradient(120% 80% at 50% 0%, #0d1527 0%, #070b14 60%, #050811 100%);
+}
+
+.about-glow-amber {
+  position: absolute;
+  top: -80px;
+  right: -50px;
+  width: 420px;
+  height: 420px;
+  background: radial-gradient(circle, rgba(245, 158, 11, 0.12) 0%, transparent 70%);
+  border-radius: 9999px;
+  filter: blur(50px);
+}
+
+.about-glow-blue {
+  position: absolute;
+  bottom: -80px;
+  left: -50px;
+  width: 420px;
+  height: 420px;
+  background: radial-gradient(circle, rgba(59, 130, 246, 0.08) 0%, transparent 70%);
+  border-radius: 9999px;
+  filter: blur(50px);
+}
+
+.about-narrative-card {
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.about-narrative-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(245, 158, 11, 0.4);
+  box-shadow: 0 16px 36px -10px rgba(0, 0, 0, 0.5), 0 0 20px -5px rgba(245, 158, 11, 0.15);
+}
+
+.about-region-item {
+  transition: all 0.25s ease;
+}
+
+.about-region-item:hover {
+  transform: translateX(4px);
+  border-color: rgba(245, 158, 11, 0.45);
+  background: rgba(15, 23, 42, 0.95);
+}
+
+
 
